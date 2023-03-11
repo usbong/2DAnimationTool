@@ -1,6 +1,10 @@
-# 2DAnimationTool
+# USBONG 2D Animation Tool
 
 Web Service tool to assist with creating animating 2D sprite images
+
+### CURRENT work-in-progress version: 
+
+http://store.usbong.ph/html_application/usbong2DAnimationTool.html
 
 ## References
 
