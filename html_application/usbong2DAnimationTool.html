@@ -299,8 +299,8 @@
 		iDefaultAnimationImageX=0; //default x		
  		iDefaultAnimationImageY=-32; //default y
 		iHumanTileAnimationCountMax=2;
-		iImageFrameSizeX=0;
-		iImageFrameSizeY=32;
+		iImageFrameWidth=0;
+		iImageFrameHeight=32;
 			
 		//notes: delay before CHANGE in frame
 		//adds max (12) frames before frame update
@@ -395,7 +395,7 @@
 			//x, y
 			//humanTile.style.objectPosition="0px -32px";
 			//notes: negative to move frame window
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-iHumanTileAnimationCount*iImageFrameSizeX)+"px "+(iDefaultAnimationImageY-iHumanTileAnimationCount*iImageFrameSizeY)+"px";
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-iHumanTileAnimationCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iHumanTileAnimationCount*iImageFrameHeight)+"px";
 			
 			if (iHumanTileAnimationCount<(iHumanTileAnimationCountMax-1)) {	
 				iHumanTileAnimationCount++;
