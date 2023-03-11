@@ -99,6 +99,11 @@
 	var fFramesPerSecond=fFramesPerSecondDefault;
 	var iCurrentIntervalId=-1;	
 
+	//added by Mike, 20230311
+	//adds 6 frames before frame update
+	var iDelayAnimationCountMovementStep=0;
+	const iDelayAnimationCountMovementStepMax=6; 
+	
 	//added by Mike, 20221108
 	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
 //	function autoGeneratePuzzleFromEnd() {
@@ -283,86 +288,93 @@
 	
 			//alert("dito");
 			
-		if (iHumanTileAnimationCount<iHumanTileAnimationCountMax) {
-			
-			//alert("iHumanTileAnimationCount: "+iHumanTileAnimationCount);
-
-			if (iFacingDirection==iFACING_DOWN) {
-				//edited by Mike, 20221117
-				//humanTile.style.objectPosition="0px 0px";
-				
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="0px -32px";
-				}
-				else {
-					humanTile.style.objectPosition="0px 0px";
-				}
-			}
-			else if (iFacingDirection==iFACING_RIGHT) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="-64px -32px";
-				}
-				else {			
-					humanTile.style.objectPosition="-64px 0px";
-				}
-			}
-			else if (iFacingDirection==iFACING_LEFT) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="-128px -32px";
-				}
-				else {
-					humanTile.style.objectPosition="-128px 0px";
-				}
-			}	
-			else if (iFacingDirection==iFACING_UP) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="-32px -32px";
-				}
-				else {
-					humanTile.style.objectPosition="-192px 0px";
-				}
-			}		
-			
-			iHumanTileAnimationCount++;	
+		//notes: delay before CHANGE in frame
+		//adds max (6) frames before frame update
+		if (iDelayAnimationCountMovementStep<iDelayAnimationCountMovementStepMax) {
+			iDelayAnimationCountMovementStep++;
 		}
 		else {
-			if (iFacingDirection==iFACING_DOWN) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="0px -64px";
-				}
-				else {			
-					humanTile.style.objectPosition="-32px 0px";
-				}
-			}
-			else if (iFacingDirection==iFACING_RIGHT) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="-64px -64px";
-				}
-				else {			
-					humanTile.style.objectPosition="-96px 0px";
-				}
-			}
-			else if (iFacingDirection==iFACING_LEFT) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="-128px -64px";
-				}
-				else {			
-					humanTile.style.objectPosition="-160px 0px";
-				}
-			}
-			else if (iFacingDirection==iFACING_UP) {
-				if (bIsWalkingAction) {
-					humanTile.style.objectPosition="-32px -64px";
-				}
-				else {			
-					humanTile.style.objectPosition="-224px 0px";
-				}
-			}		
-	
-			iHumanTileAnimationCount=0;
-		}	
+			iDelayAnimationCountMovementStep=0;
 			
-			//TO-DO: -add: delay before CHANGE in frame
+			if (iHumanTileAnimationCount<iHumanTileAnimationCountMax) {
+				
+				//alert("iHumanTileAnimationCount: "+iHumanTileAnimationCount);
+	
+				if (iFacingDirection==iFACING_DOWN) {
+					//edited by Mike, 20221117
+					//humanTile.style.objectPosition="0px 0px";
+					
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="0px -32px";
+					}
+					else {
+						humanTile.style.objectPosition="0px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_RIGHT) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="-64px -32px";
+					}
+					else {			
+						humanTile.style.objectPosition="-64px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_LEFT) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="-128px -32px";
+					}
+					else {
+						humanTile.style.objectPosition="-128px 0px";
+					}
+				}	
+				else if (iFacingDirection==iFACING_UP) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="-32px -32px";
+					}
+					else {
+						humanTile.style.objectPosition="-192px 0px";
+					}
+				}		
+				
+				iHumanTileAnimationCount++;	
+			}
+			else {
+				if (iFacingDirection==iFACING_DOWN) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="0px -64px";
+					}
+					else {			
+						humanTile.style.objectPosition="-32px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_RIGHT) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="-64px -64px";
+					}
+					else {			
+						humanTile.style.objectPosition="-96px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_LEFT) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="-128px -64px";
+					}
+					else {			
+						humanTile.style.objectPosition="-160px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_UP) {
+					if (bIsWalkingAction) {
+						humanTile.style.objectPosition="-32px -64px";
+					}
+					else {			
+						humanTile.style.objectPosition="-224px 0px";
+					}
+				}		
+		
+				iHumanTileAnimationCount=0;
+			}			
+		}
 	}
 	
 	function onLoad() {
@@ -380,8 +392,8 @@
 */		
 		iFacingDirection=iFACING_DOWN;
 		
-		fFramesPerSecond=100.00; //16.66;				
-		clearInterval(iCurrentIntervalId);		
+		fFramesPerSecond=16.66; //100.00; //16.66;				
+		clearInterval(iCurrentIntervalId);
 		iCurrentIntervalId=setInterval(myUpdateFunction, fFramesPerSecond);		
 	}
 	
