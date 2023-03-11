@@ -1,6 +1,5 @@
 <!--
 /*
-'
 ' Copyright 2022~2023 USBONG
 '
 ' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
@@ -78,7 +77,27 @@
 	const iDirectionTotalKeyCount = 4;	
 	
 	var arrayCountMovementStep= [];
+	
+	//added by Mike, 20230311
+	var iFacingDirection=0;
+	
+	const iFACING_DOWN=0;
+	const iFACING_UP=1;
+	const iFACING_LEFT=2;
+	const iFACING_RIGHT=3;	
 
+	const iHumanTileAnimationCountMax=2;//6;
+	var iHumanTileAnimationCount=0;	 
+	
+	var bIsWalkingAction=true; //false; 
+		
+	//edited by Mike, 20221129
+	//1000/60=16.66; 60 frames per second
+	//1000/30=33.33; 30 frames 
+	const fFramesPerSecondDefault=16.66;
+	//const fFramesPerSecondDefault=33.33;
+	var fFramesPerSecond=fFramesPerSecondDefault;
+	var iCurrentIntervalId=-1;	
 
 	//added by Mike, 20221108
 	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
@@ -259,9 +278,91 @@
 		}				
 	}
 
-	function miniGameActionUpdate() {	
-		//added by Mike, 20220820
+	function myUpdateFunction() {	
 		var humanTile = document.getElementById("humanTileImageId");
+	
+			//alert("dito");
+			
+		if (iHumanTileAnimationCount<iHumanTileAnimationCountMax) {
+			
+			//alert("iHumanTileAnimationCount: "+iHumanTileAnimationCount);
+
+			if (iFacingDirection==iFACING_DOWN) {
+				//edited by Mike, 20221117
+				//humanTile.style.objectPosition="0px 0px";
+				
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="0px -32px";
+				}
+				else {
+					humanTile.style.objectPosition="0px 0px";
+				}
+			}
+			else if (iFacingDirection==iFACING_RIGHT) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="-64px -32px";
+				}
+				else {			
+					humanTile.style.objectPosition="-64px 0px";
+				}
+			}
+			else if (iFacingDirection==iFACING_LEFT) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="-128px -32px";
+				}
+				else {
+					humanTile.style.objectPosition="-128px 0px";
+				}
+			}	
+			else if (iFacingDirection==iFACING_UP) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="-32px -32px";
+				}
+				else {
+					humanTile.style.objectPosition="-192px 0px";
+				}
+			}		
+			
+			iHumanTileAnimationCount++;	
+		}
+		else {
+			if (iFacingDirection==iFACING_DOWN) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="0px -64px";
+				}
+				else {			
+					humanTile.style.objectPosition="-32px 0px";
+				}
+			}
+			else if (iFacingDirection==iFACING_RIGHT) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="-64px -64px";
+				}
+				else {			
+					humanTile.style.objectPosition="-96px 0px";
+				}
+			}
+			else if (iFacingDirection==iFACING_LEFT) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="-128px -64px";
+				}
+				else {			
+					humanTile.style.objectPosition="-160px 0px";
+				}
+			}
+			else if (iFacingDirection==iFACING_UP) {
+				if (bIsWalkingAction) {
+					humanTile.style.objectPosition="-32px -64px";
+				}
+				else {			
+					humanTile.style.objectPosition="-224px 0px";
+				}
+			}		
+	
+			iHumanTileAnimationCount=0;
+		}	
+			
+			//TO-DO: -add: delay before CHANGE in frame
 	}
 	
 	function onLoad() {
@@ -270,13 +371,25 @@
 			autoGeneratePuzzleFromEndForStorage();
 		}
 */		
+		//TO-DO: -update: this; add bIsNotEnd
+/*		
+		while (true) {
+			iFacingDirection=iFACING_DOWN;		
+			miniGameActionUpdate();
+		}
+*/		
+		iFacingDirection=iFACING_DOWN;
+		
+		fFramesPerSecond=100.00; //16.66;				
+		clearInterval(iCurrentIntervalId);		
+		iCurrentIntervalId=setInterval(myUpdateFunction, fFramesPerSecond);		
 	}
 	
   </script>  
   <body id="myBodyId" onload="onLoad();">
   
   
-	<img id="humanTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
+    <img id="humanTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
 	  
   </body>
 </html>
