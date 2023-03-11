@@ -86,8 +86,14 @@
 	const iFACING_LEFT=2;
 	const iFACING_RIGHT=3;	
 
-	const iHumanTileAnimationCountMax=2;//6;
+	//const iHumanTileAnimationCountMax=2;//6;
+	var iHumanTileAnimationCountMax=2;//6;
 	var iHumanTileAnimationCount=0;	 
+	
+	var iDefaultAnimationImageX=0; //default x
+	var iDefaultAnimationImageY=-32; //default y
+	var iImageFrameSizeX=0;
+	var iImageFrameSizeY=32;
 	
 	var bIsWalkingAction=true; //false; 
 		
@@ -102,7 +108,7 @@
 	//added by Mike, 20230311
 	//adds 6 frames before frame update
 	var iDelayAnimationCountMovementStep=0;
-	const iDelayAnimationCountMovementStepMax=6; 
+	const iDelayAnimationCountMovementStepMax=12; //6; 
 	
 	//added by Mike, 20221108
 	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
@@ -287,17 +293,26 @@
 		var humanTile = document.getElementById("humanTileImageId");
 	
 			//alert("dito");
+		
+		//TO-DO: -update: this; add in window, input boxes 
+		//note: parameters		
+		iDefaultAnimationImageX=0; //default x		
+ 		iDefaultAnimationImageY=-32; //default y
+		iHumanTileAnimationCountMax=2;
+		iImageFrameSizeX=0;
+		iImageFrameSizeY=32;
 			
 		//notes: delay before CHANGE in frame
-		//adds max (6) frames before frame update
+		//adds max (12) frames before frame update
 		if (iDelayAnimationCountMovementStep<iDelayAnimationCountMovementStepMax) {
 			iDelayAnimationCountMovementStep++;
 		}
 		else {
 			iDelayAnimationCountMovementStep=0;
-			
-			if (iHumanTileAnimationCount<iHumanTileAnimationCountMax) {
-				
+						
+			//updated: IF using > 2 animating image frames
+/*
+			if (iHumanTileAnimationCount<iHumanTileAnimationCountMax) {				
 				//alert("iHumanTileAnimationCount: "+iHumanTileAnimationCount);
 	
 				if (iFacingDirection==iFACING_DOWN) {
@@ -374,6 +389,20 @@
 		
 				iHumanTileAnimationCount=0;
 			}			
+*/			
+			//if (iFacingDirection==iFACING_DOWN) {
+			//if (bIsWalkingAction) {
+			//x, y
+			//humanTile.style.objectPosition="0px -32px";
+			//notes: negative to move frame window
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-iHumanTileAnimationCount*iImageFrameSizeX)+"px "+(iDefaultAnimationImageY-iHumanTileAnimationCount*iImageFrameSizeY)+"px";
+			
+			if (iHumanTileAnimationCount<(iHumanTileAnimationCountMax-1)) {	
+				iHumanTileAnimationCount++;
+			}
+			else {
+				iHumanTileAnimationCount=0;
+			}
 		}
 	}
 	
