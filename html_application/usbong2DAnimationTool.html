@@ -313,6 +313,7 @@
 	}
 
 	//added by Mike, 20230312
+	//note: press TAB, then ENTER to SET		
 	function setAnimImageFrameX() {	
 		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
 		
@@ -322,21 +323,64 @@
 			setAnimImageFrameXText.value=setAnimImageFrameXText.value*-1;
 		}
 		
-		//TO-DO: -add: ENTER @FOCUSED part
-		
 		//alert(setAnimImageFrameXText.value);				
 		iDefaultAnimationImageX=setAnimImageFrameXText.value;//-32;
 	}
 
+	function setAnimImageFrameY() {	
+		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
+		
+		//notes: auto-sets to negative number;
+		//TO-DO: -add: a checkbox as switch?
+		if (setAnimImageFrameYText.value>0) {
+			setAnimImageFrameYText.value=setAnimImageFrameYText.value*-1;
+		}
+		
+		//alert(setAnimImageFrameXText.value);				
+		iDefaultAnimationImageY=setAnimImageFrameYText.value;//-32;
+	}
+
+	function setAnimImageFrameWidth() {	
+		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
+				
+		//alert(setAnimImageFrameXText.value);				
+		iImageFrameWidth=setAnimImageFrameWidthText.value;//-32;
+	}
+	
+	function setAnimImageFrameHeight() {	
+		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
+				
+		//alert(setAnimImageFrameXText.value);				
+		iImageFrameHeight=setAnimImageFrameHeightText.value;//-32;
+	}
+
+
 	//added by Mike, 20230312	
+	//TO-DO: -update: variable container names
 	function init() {			
 		//TO-DO: -update: this; add in window, input boxes 
 		//note: parameters		
 		iDefaultAnimationImageX=0;//-32; //default x		
  		iDefaultAnimationImageY=-32; //default y
+
+		//TO-DO: -add: this
 		iHumanTileAnimationCountMax=2;
+
 		iImageFrameWidth=0;
-		iImageFrameHeight=32;
+		iImageFrameHeight=32;		
+
+		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
+		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
+
+		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
+		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
+
+		setAnimImageFrameWidthText.value=iImageFrameWidth;
+		setAnimImageFrameHeightText.value=iImageFrameHeight;
+
+		setAnimImageFrameXText.value=iDefaultAnimationImageX;
+		setAnimImageFrameYText.value=iDefaultAnimationImageY;
+
 	}
 	
 	function myUpdateFunction() {	
@@ -526,11 +570,38 @@
 	<table class="TableSetPanel" id="tableSetPanelId">
 	<tr>
 		<td>
-			<label class="LabelSet">Set Anim Image X:</label>
+			<label class="LabelSet">Set Image Frame W:</label>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameWidthId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameWidthId" onclick="setAnimImageFrameWidth()">SET</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame H:</label>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameHeightId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameHeightId" onclick="setAnimImageFrameHeight()">SET</button>
+		</td>
+	</tr>
+
+		<tr>
+		<td>
+			<br/>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame X:</label>
 			<input type="number" class="TextInputSet" id="textSetAnimImageFrameXId">
 			<button class="ButtonSet" id="buttonSetAnimImageFrameXId" onclick="setAnimImageFrameX()">SET</button>
 		</td>
+	</tr>
+	<tr>
 		<td>
+			<label class="LabelSet">Set Image Frame Y:</label>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameYId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameYId" onclick="setAnimImageFrameY()">SET</button>
 		</td>
 	</tr>
 	</table>
