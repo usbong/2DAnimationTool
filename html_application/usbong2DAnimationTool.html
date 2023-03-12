@@ -108,8 +108,11 @@
 	
 	var iDefaultAnimationImageX=0; //default x
 	var iDefaultAnimationImageY=-32; //default y
+
+	/*	//removed by Mike, 20230312
 	var iImageFrameSizeX=0;
 	var iImageFrameSizeY=32;
+*/
 	
 	var bIsWalkingAction=true; //false; 
 		
@@ -357,6 +360,7 @@
 
 	//added by Mike, 20230312	
 	//TO-DO: -update: variable container names
+	//TO-DO: -fix: SET button NOT focused on SAFARI
 	function init() {			
 		//TO-DO: -update: this; add in window, input boxes 
 		//note: parameters		
@@ -366,7 +370,7 @@
 		//TO-DO: -add: this
 		iHumanTileAnimationCountMax=2;
 
-		iImageFrameWidth=0;
+		iImageFrameWidth=32; //0;
 		iImageFrameHeight=32;		
 
 		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
@@ -493,8 +497,25 @@
 			//x, y
 			//humanTile.style.objectPosition="0px -32px";
 			//notes: negative to move frame window
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-iHumanTileAnimationCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iHumanTileAnimationCount*iImageFrameHeight)+"px";
-			
+			//edited by Mike, 20230312
+//			humanTile.style.objectPosition=(iDefaultAnimationImageX-iHumanTileAnimationCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iHumanTileAnimationCount*iImageFrameHeight)+"px";
+/*
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iHumanTileAnimationCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
+										   (iDefaultAnimationImageY+(iHumanTileAnimationCount*(iImageFrameHeight+(iDefaultAnimationImageY-iImageFrameHeight))))+"px";
+*/
+/*
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iHumanTileAnimationCount*iDefaultAnimationImageX))+"px "+
+										   (iDefaultAnimationImageY+(iHumanTileAnimationCount*iDefaultAnimationImageY))+"px";
+*/		
+
+			//TO-DO: -add: in settings, horizontal or vertical animation frame movement in INPUT spritesheet
+/*
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iHumanTileAnimationCount*iImageFrameWidth))+"px "+
+										   (iDefaultAnimationImageY-(iHumanTileAnimationCount*iImageFrameHeight))+"px";
+*/
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
+										   (iDefaultAnimationImageY-(iHumanTileAnimationCount*iImageFrameHeight))+"px";
+
 			if (iHumanTileAnimationCount<(iHumanTileAnimationCountMax-1)) {	
 				iHumanTileAnimationCount++;
 			}
