@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230312; from 20230311
+' @date updated: 20230313; from 20230312
 ' @website: www.usbong.ph
 '
 '
@@ -46,6 +46,19 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
   <style type="text/css">  
+		canvas.myCanvas {			
+			padding: 0;
+			margin: auto;							
+			display: block;
+			
+			width: 320px;
+			height: 288px;	
+
+			border: 1px solid gray;
+
+			z-index: -1;							
+		}  
+
 		.Image32x32TileFrame1 {
 			position: absolute;
   			clip: rect(0px,32px,32px,0px);
@@ -135,6 +148,10 @@
 	var iHorizontalOffset=0;
 	var iVerticalOffset=0;
 
+	//note: for INNER SCREEN
+	iHorizontalOffset=(screen.width)/2-iStageMaxWidth/2;	
+	iVerticalOffsetInnerScreen=0;
+	
 	
 	//added by Mike, 20221108
 	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
@@ -378,7 +395,7 @@
 
 		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
 		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
-
+				
 		setAnimImageFrameWidthText.value=iImageFrameWidth;
 		setAnimImageFrameHeightText.value=iImageFrameHeight;
 
@@ -391,6 +408,32 @@
 		var humanTile = document.getElementById("humanTileImageId");
 		//var setAnimImageFrameXButton = document.getElementById("buttonSetAnimImageFrameXId");
 		var setPanelTable = document.getElementById("tableSetPanelId");
+
+		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
+		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
+	
+		//added by Mike, 20230313
+		//reference: https://www.w3schools.com/tags/canvas_fillrect.asp; 
+		//last accessed: 2020911
+		var myCanvas = document.getElementById("myCanvasId");
+		var myCanvasContext = myCanvas.getContext("2d");
+		
+		//myCanvasContext.fillStyle = "#000000"; //black; //"#ababab"; //"rgb(128,89,27)"; //"#604122"; //"blue";	
+		
+		//myCanvasContext.fillStyle = "#c5c5c5"; //gray
+		myCanvasContext.fillStyle = "#ffffff"; //white background//stage
+		
+		myCanvasContext.fillRect(0, 0, iStageMaxWidth, iStageMaxHeight);	
+	
+//alert (iHorizontalOffset);
+
+		//added by Mike, 20221002; edited by Mike, 20221005
+		//myCanvas.style.top = (0)+"px"; //iVerticalOffset+
+		myCanvas.style.top = (iVerticalOffsetInnerScreen+0)+"px"; //iVerticalOffset+
+
+		//added by Mike, 20221012
+		iHorizontalOffset=myCanvas.getBoundingClientRect().x;
+	
 	
 			//alert("dito");
 
@@ -524,14 +567,29 @@
 			}
 		}
 		
+/*	//removed by Mike, 20230313		
 		//TO-DO: -update: this
 		iHorizontalOffset=0;
 		iVerticalOffsetInnerScreen=0;
 		iHumanTileX=0;
 		iHumanTileY=0;
+*/
 		
+		//edited by Mike, 20230313	
+/*
 		humanTile.style.left = (iHorizontalOffset+iHumanTileX)+"px";	
 		humanTile.style.top = (iVerticalOffsetInnerScreen+iHumanTileY)+"px";	
+*/
+		//added by Mike, 20230313
+		//let iHumanTileX = humanTile.getBoundingClientRect().x;
+	
+	//alert(iHorizontalOffset);
+	
+//		humanTile.style.left = (iHorizontalOffset+iStageMaxWidth/2+iHumanTileX)+"px";	
+//		humanTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/3+iHumanTileY)+"px";	
+
+		humanTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+"px";
+		humanTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+"px";	
 
 /*		
 		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
@@ -541,6 +599,8 @@
 		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
 		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px"; //+iStageMaxHeight
 	}
+	
+	
 	
 	function onLoad() {
 /*	
@@ -555,17 +615,23 @@
 			miniGameActionUpdate();
 		}
 */		
+
+
 		init();
 
 		iFacingDirection=iFACING_DOWN;
 		
 		fFramesPerSecond=16.66; //100.00; //16.66;				
 		clearInterval(iCurrentIntervalId);
-		iCurrentIntervalId=setInterval(myUpdateFunction, fFramesPerSecond);		
+		iCurrentIntervalId=setInterval(myUpdateFunction, fFramesPerSecond);
 	}
 	
   </script>  
   <body id="myBodyId" onload="onLoad();">
+  
+	<canvas id="myCanvasId" class="myCanvas">
+	</canvas>
+	  
 <!-- note: using absolute positions; table technique NO EFFECT
 	<table>
 	<tr>
@@ -592,6 +658,7 @@
 	<tr>
 		<td>
 			<label class="LabelSet">Set Image Frame W:</label>
+			<br/>
 			<input type="number" class="TextInputSet" id="textSetAnimImageFrameWidthId">
 			<button class="ButtonSet" id="buttonSetAnimImageFrameWidthId" onclick="setAnimImageFrameWidth()">SET</button>
 		</td>
@@ -599,6 +666,7 @@
 	<tr>
 		<td>
 			<label class="LabelSet">Set Image Frame H:</label>
+			<br/>
 			<input type="number" class="TextInputSet" id="textSetAnimImageFrameHeightId">
 			<button class="ButtonSet" id="buttonSetAnimImageFrameHeightId" onclick="setAnimImageFrameHeight()">SET</button>
 		</td>
@@ -614,6 +682,7 @@
 	<tr>
 		<td>
 			<label class="LabelSet">Set Image Frame X:</label>
+			<br/>
 			<input type="number" class="TextInputSet" id="textSetAnimImageFrameXId">
 			<button class="ButtonSet" id="buttonSetAnimImageFrameXId" onclick="setAnimImageFrameX()">SET</button>
 		</td>
@@ -621,6 +690,7 @@
 	<tr>
 		<td>
 			<label class="LabelSet">Set Image Frame Y:</label>
+			<br/>
 			<input type="number" class="TextInputSet" id="textSetAnimImageFrameYId">
 			<button class="ButtonSet" id="buttonSetAnimImageFrameYId" onclick="setAnimImageFrameY()">SET</button>
 		</td>
