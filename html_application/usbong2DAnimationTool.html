@@ -42,10 +42,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   	<!-- TO-DO: -update: this -->
-<!--
   	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
--->
+<!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
   	<base href="http://store.usbong.ph/" target="_blank">
+-->
   </head>
 
   <title>
@@ -160,14 +160,16 @@
 	const iFACING_LEFT=2;
 	const iFACING_RIGHT=3;	
 
+	//edited by Mike, 20230314
+	//note: VALUES set in init()
 	//const iTotalAnimImageFrameCount=2;//6;
-	var iTotalAnimImageFrameCount=2;//6;
-	var iAnimImageFrameCount=0;	 
+	var iTotalAnimImageFrameCount;//=4;//6;
+	var iAnimImageFrameCount;//=0;	 
 	
-	var iDefaultAnimationImageX=0; //default x
-	var iDefaultAnimationImageY=-32; //default y
+	var iDefaultAnimationImageX;//=0; //default x
+	var iDefaultAnimationImageY;//=0;//-32; //default y
 	
-	var iTotalAnimImageFrameCount=2;
+//	var iTotalAnimImageFrameCount=4;
 
 	/*	//removed by Mike, 20230312
 	var iImageFrameSizeX=0;
@@ -448,10 +450,10 @@
 		//TO-DO: -update: this; add in window, input boxes 
 		//note: parameters		
 		iDefaultAnimationImageX=0;//-32; //default x		
- 		iDefaultAnimationImageY=-32; //default y
+ 		iDefaultAnimationImageY=0;//-32; //default y
 
 		//TO-DO: -add: this
-		iTotalAnimImageFrameCount=2;
+		iTotalAnimImageFrameCount=4;//2;
 
 		iImageFrameWidth=32; //0;
 		iImageFrameHeight=32;		
