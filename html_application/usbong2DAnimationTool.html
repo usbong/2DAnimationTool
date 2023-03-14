@@ -113,10 +113,17 @@
   			clip: rect(0px,32px,32px,0px);
 		}		  
 		
-		.ButtonSet, .TextInputSet, .LabelSet {		
+		.ButtonSet, .TextInputSet {		
 			position: relative; /*absolute;*/			
 			font-size: 20px;
 		}
+		
+		.LabelSet {		
+			position: relative; /*absolute;*/			
+			font-size: 24px;
+			
+			font-weight: bolder; /*bold;*/
+		}		
 		
 		table.TableSetPanel
 		{
@@ -784,7 +791,7 @@
 	
 	<tr>
 		<td>
-			<label class="LabelSet">Set Total Animation Frame Count:</label>
+			<label class="LabelSet">Set Total Frame Count:</label>
 			<br/>
 			<input type="number" class="TextInputSet" id="textSetTotalAnimImageFrameCountId">
 			<button class="ButtonSet" id="buttonSetTotalAnimImageFrameCountId" onclick="setTotalAnimImageFrameCount()">SET</button>
