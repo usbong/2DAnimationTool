@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230313; from 20230312
+' @date updated: 20230314; from 20230313
 ' @website: www.usbong.ph
 '
 '
@@ -55,14 +55,49 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
   <style type="text/css">  
+		html, body
+        {
+            font-family: Arial;
+			font-size: 11pt;
+				
+			/* edited by Mike, 20220911
+			width: 640px; 
+			*/
+			width: 100%; /*90%; 80%;*/
+			height: 100%;
+										
+			padding: 0;
+			margin: 0;
+			
+			/* //added by Mike, 20221002
+			//reference: https://www.w3schools.com/howto/howto_css_disable_text_selection.asp;
+			//last accessed: 20221002
+			*/
+			
+			-webkit-user-select: none; /* Safari */
+			-ms-user-select: none; /* IE 10 and IE 11 */
+			user-select: none; /* Standard syntax */
+			
+			/* added by Mike, 20221012 */
+			transform: scale(1.0);
+			
+			/* added by Mike, 20221119 */							
+			touch-action: none;
+		}  
+  
 		canvas.myCanvas {			
 			padding: 0;
 			margin: auto;							
 			display: block;
 			
+/*
 			width: 320px;
 			height: 288px;	
+*/
 
+			width: 448px; /*640px;*/
+			height: 402px; /*576px;*/
+			
 			border: 1px solid gray;
 
 			z-index: -1;							
@@ -78,8 +113,9 @@
   			clip: rect(0px,32px,32px,0px);
 		}		  
 		
-		.ButtonSet, TextInputSet, LabelSet {
-			position: relative; /*absolute;*/
+		.ButtonSet, .TextInputSet, .LabelSet {		
+			position: relative; /*absolute;*/			
+			font-size: 20px;
 		}
 		
 		table.TableSetPanel
@@ -151,8 +187,14 @@
 	var iDelayAnimationCountMovementStep=0;
 	const iDelayAnimationCountMovementStepMax=12; //6; 
 
+	//edited by Mike, 20230314
+/*	
 	const iStageMaxWidth=160*2; //160;
 	const iStageMaxHeight=144*2; //144;
+*/
+	//TO-DO: -add: auto-update Canvas' width and height to be EXACT
+	var iStageMaxWidth=448; //640;
+	var iStageMaxHeight=402; //576;
 
 	var iHorizontalOffset=0;
 	var iVerticalOffset=0;
@@ -597,8 +639,16 @@
 //		humanTile.style.left = (iHorizontalOffset+iStageMaxWidth/2+iHumanTileX)+"px";	
 //		humanTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/3+iHumanTileY)+"px";	
 
+//alert(iVerticalOffsetInnerScreen);
+//alert(iStageMaxHeight);
+//alert(setAnimImageFrameHeightText.value);
+
 		humanTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+"px";
+		
+		//alert(iStageMaxHeight);
+		
 		humanTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+"px";	
+
 
 /*		
 		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
