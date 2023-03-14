@@ -160,12 +160,14 @@
 	const iFACING_LEFT=2;
 	const iFACING_RIGHT=3;	
 
-	//const iHumanTileAnimationCountMax=2;//6;
-	var iHumanTileAnimationCountMax=2;//6;
-	var iHumanTileAnimationCount=0;	 
+	//const iTotalAnimImageFrameCount=2;//6;
+	var iTotalAnimImageFrameCount=2;//6;
+	var iAnimImageFrameCount=0;	 
 	
 	var iDefaultAnimationImageX=0; //default x
 	var iDefaultAnimationImageY=-32; //default y
+	
+	var iTotalAnimImageFrameCount=2;
 
 	/*	//removed by Mike, 20230312
 	var iImageFrameSizeX=0;
@@ -425,6 +427,19 @@
 		iImageFrameHeight=setAnimImageFrameHeightText.value;//-32;
 	}
 
+	function setTotalAnimImageFrameCount() {	
+		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
+	
+		//notes: auto-sets to positive number;
+		if (setTotalAnimImageFrameCountText.value<0) {
+			setTotalAnimImageFrameCountText.value=setTotalAnimImageFrameCountText.value*-1;
+		}
+	
+		//edited by Mike, 20230314
+	iTotalAnimImageFrameCount=setTotalAnimImageFrameCountText.value;
+	}
+	
+
 
 	//added by Mike, 20230312	
 	//TO-DO: -update: variable container names
@@ -436,7 +451,7 @@
  		iDefaultAnimationImageY=-32; //default y
 
 		//TO-DO: -add: this
-		iHumanTileAnimationCountMax=2;
+		iTotalAnimImageFrameCount=2;
 
 		iImageFrameWidth=32; //0;
 		iImageFrameHeight=32;		
@@ -446,12 +461,16 @@
 
 		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
 		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
+
+		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
 				
 		setAnimImageFrameWidthText.value=iImageFrameWidth;
 		setAnimImageFrameHeightText.value=iImageFrameHeight;
 
 		setAnimImageFrameXText.value=iDefaultAnimationImageX;
 		setAnimImageFrameYText.value=iDefaultAnimationImageY;
+
+		//added by Mike, 20230314	setTotalAnimImageFrameCountText.value=iTotalAnimImageFrameCount;
 
 	}
 	
@@ -493,7 +512,7 @@
 		//note: parameters		
 		iDefaultAnimationImageX=-32;//0; //default x		
  		iDefaultAnimationImageY=-32; //default y
-		iHumanTileAnimationCountMax=2;
+		iTotalAnimImageFrameCount=2;
 		iImageFrameWidth=0;
 		iImageFrameHeight=32;
 */
@@ -508,8 +527,8 @@
 						
 			//updated: IF using > 2 animating image frames
 /*
-			if (iHumanTileAnimationCount<iHumanTileAnimationCountMax) {				
-				//alert("iHumanTileAnimationCount: "+iHumanTileAnimationCount);
+			if (iAnimImageFrameCount<iTotalAnimImageFrameCount) {				
+				//alert("iAnimImageFrameCount: "+iAnimImageFrameCount);
 	
 				if (iFacingDirection==iFACING_DOWN) {
 					//edited by Mike, 20221117
@@ -547,7 +566,7 @@
 					}
 				}		
 				
-				iHumanTileAnimationCount++;	
+				iAnimImageFrameCount++;	
 			}
 			else {
 				if (iFacingDirection==iFACING_DOWN) {
@@ -583,7 +602,7 @@
 					}
 				}		
 		
-				iHumanTileAnimationCount=0;
+				iAnimImageFrameCount=0;
 			}			
 */			
 			//if (iFacingDirection==iFACING_DOWN) {
@@ -592,29 +611,29 @@
 			//humanTile.style.objectPosition="0px -32px";
 			//notes: negative to move frame window
 			//edited by Mike, 20230312
-//			humanTile.style.objectPosition=(iDefaultAnimationImageX-iHumanTileAnimationCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iHumanTileAnimationCount*iImageFrameHeight)+"px";
+//			humanTile.style.objectPosition=(iDefaultAnimationImageX-iAnimImageFrameCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iAnimImageFrameCount*iImageFrameHeight)+"px";
 /*
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iHumanTileAnimationCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
-										   (iDefaultAnimationImageY+(iHumanTileAnimationCount*(iImageFrameHeight+(iDefaultAnimationImageY-iImageFrameHeight))))+"px";
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
+										   (iDefaultAnimationImageY+(iAnimImageFrameCount*(iImageFrameHeight+(iDefaultAnimationImageY-iImageFrameHeight))))+"px";
 */
 /*
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iHumanTileAnimationCount*iDefaultAnimationImageX))+"px "+
-										   (iDefaultAnimationImageY+(iHumanTileAnimationCount*iDefaultAnimationImageY))+"px";
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iDefaultAnimationImageX))+"px "+
+										   (iDefaultAnimationImageY+(iAnimImageFrameCount*iDefaultAnimationImageY))+"px";
 */		
 
 			//TO-DO: -add: in settings, horizontal or vertical animation frame movement in INPUT spritesheet
 /*
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iHumanTileAnimationCount*iImageFrameWidth))+"px "+
-										   (iDefaultAnimationImageY-(iHumanTileAnimationCount*iImageFrameHeight))+"px";
+			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+
+										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
 */
 			humanTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
-										   (iDefaultAnimationImageY-(iHumanTileAnimationCount*iImageFrameHeight))+"px";
+										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
 
-			if (iHumanTileAnimationCount<(iHumanTileAnimationCountMax-1)) {	
-				iHumanTileAnimationCount++;
+			if (iAnimImageFrameCount<(iTotalAnimImageFrameCount-1)) {	
+				iAnimImageFrameCount++;
 			}
 			else {
-				iHumanTileAnimationCount=0;
+				iAnimImageFrameCount=0;
 			}
 		}
 		
@@ -708,7 +727,7 @@
 <!--	
 		iDefaultAnimationImageX=-32;//0; //default x		
  		iDefaultAnimationImageY=-32; //default y
-		iHumanTileAnimationCountMax=2;
+		iTotalAnimImageFrameCount=2;
 		iImageFrameWidth=0;
 		iImageFrameHeight=32;
 -->
@@ -731,7 +750,7 @@
 		</td>
 	</tr>
 
-		<tr>
+	<tr>
 		<td>
 			<br/>
 		</td>
@@ -754,6 +773,33 @@
 			<button class="ButtonSet" id="buttonSetAnimImageFrameYId" onclick="setAnimImageFrameY()">SET</button>
 		</td>
 	</tr>
+	<tr>
+		<td>
+			<br/>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td>
+			<label class="LabelSet">Set Total Animation Frame Count:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetTotalAnimImageFrameCountId">
+			<button class="ButtonSet" id="buttonSetTotalAnimImageFrameCountId" onclick="setTotalAnimImageFrameCount()">SET</button>
+		</td>
+	</tr>
+<!--
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame Y:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameYId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameYId" onclick="setAnimImageFrameY()">SET</button>
+		</td>
+	</tr>
+-->	
+	</table>	
+	
 	</table>
 
   </body>
