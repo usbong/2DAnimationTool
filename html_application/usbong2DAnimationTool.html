@@ -42,11 +42,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
   	<!-- TO-DO: -update: this -->
+<!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
   	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
-
-	<!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
-  	<base href="http://store.usbong.ph/" target="_blank">
 -->
+
+  	<base href="http://store.usbong.ph/" target="_blank">
   </head>
 
   <title>
@@ -107,6 +107,8 @@
 		.Image32x32TileFrame1 {
 			position: absolute;
   			clip: rect(0px,32px,32px,0px);
+			
+			visibility: hidden;			
 		}
 
 		.ImageTextInputSet32x32TileFrame2 {
@@ -131,6 +133,8 @@
 			position: absolute;
 			border: 2px dotted #ab9c7d;		
 			margin-top: 10px;
+			
+			visibility: hidden;
 		}						
 
 		
@@ -473,6 +477,10 @@
 		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
 
 		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
+		
+		//added by Mike, 20230315
+		var setPanelTable = document.getElementById("tableSetPanelId");
+		var humanTile = document.getElementById("humanTileImageId");
 				
 		setAnimImageFrameWidthText.value=iImageFrameWidth;
 		setAnimImageFrameHeightText.value=iImageFrameHeight;
@@ -483,6 +491,12 @@
 		//added by Mike, 20230314	
 		setTotalAnimImageFrameCountText.value=iTotalAnimImageFrameCount;
 
+		//added by Mike, 20230315
+		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
+		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px";
+		setPanelTable.style.visibility = "visible";
+		
+		humanTile.style.visibility = "visible";
 	}
 	
 	function myUpdateFunction() {	
