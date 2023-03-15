@@ -31,9 +31,7 @@
 
 //added by Mike, 20230313
 //TO-DO: -add: adjustable "STAGE" SIZE textbox
-//TO-DO: -add: direction of animation image: horizontal, vertical
 //TO-DO: -add: timeline?; remembers: DIRECTOR6, FLASH tool
-//TO-DO: -add: animation delay count textbox
 //TO-DO: -note: location of image sprite file in assets folder, editable using GIMP tool
 
 -->
@@ -135,7 +133,7 @@
 		{
 			position: absolute;
 			border: 2px dotted #ab9c7d;		
-			margin-top: 10px;
+			margin-top: 0px; /*10px*/
 			
 			visibility: hidden;
 		}						
@@ -206,10 +204,10 @@
 	var fFramesPerSecond=fFramesPerSecondDefault;
 	var iCurrentIntervalId=-1;	
 
-	//added by Mike, 20230311
+	//edited by Mike, 20230315; from 20230311
 	//adds 6 frames before frame update
 	var iDelayAnimationCountMovementStep=0;
-	const iDelayAnimationCountMovementStepMax=12; //6; 
+	var iDelayAnimationCountMovementStepMax=12; //6; 
 
 	//edited by Mike, 20230314
 /*	
@@ -448,6 +446,11 @@
 		//alert(setAnimImageFrameXText.value);				
 		iImageFrameHeight=setAnimImageFrameHeightText.value;//-32;
 	}
+	
+	function setAnimDelay() {	
+		var setAnimDelayText = document.getElementById("textSetAnimDelayId");
+					iDelayAnimationCountMovementStepMax=setAnimDelayText.value;
+	}
 
 	function setTotalAnimImageFrameCount() {	
 		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
@@ -486,6 +489,8 @@
 
 		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
 		
+		var setAnimDelayText = document.getElementById("textSetAnimDelayId");
+				
 		//added by Mike, 20230315
 		var setPanelTable = document.getElementById("tableSetPanelId");
 		var humanTile = document.getElementById("humanTileImageId");
@@ -497,7 +502,10 @@
 		setAnimImageFrameYText.value=iDefaultAnimationImageY;
 
 		//added by Mike, 20230314	
-		setTotalAnimImageFrameCountText.value=iTotalAnimImageFrameCount;
+	setTotalAnimImageFrameCountText.value=iTotalAnimImageFrameCount;
+		//added by Mike, 20230315
+setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
+				
 
 		//added by Mike, 20230315
 		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
@@ -825,22 +833,22 @@
 	
 	<tr>
 		<td>
-			<label class="LabelSet">Set Total Frame Count:</label>
+			<label class="LabelSet">Set TOTAL Frame Count:</label>
 			<br/>
 			<input type="number" class="TextInputSet" id="textSetTotalAnimImageFrameCountId">
 			<button class="ButtonSet" id="buttonSetTotalAnimImageFrameCountId" onclick="setTotalAnimImageFrameCount()">SET</button>
 		</td>
 	</tr>
-<!--
+
 	<tr>
 		<td>
-			<label class="LabelSet">Set Image Frame Y:</label>
+			<label class="LabelSet">Set DELAY Frame Count:</label>
 			<br/>
-			<input type="number" class="TextInputSet" id="textSetAnimImageFrameYId">
-			<button class="ButtonSet" id="buttonSetAnimImageFrameYId" onclick="setAnimImageFrameY()">SET</button>
+			<input type="number" class="TextInputSet" id="textSetAnimDelayId">
+			<button class="ButtonSet" id="buttonSetAnimDelayId" onclick="setAnimDelay()">SET</button>
 		</td>
 	</tr>
--->	
+
 	<tr>
 		<td>
 			<br/>
