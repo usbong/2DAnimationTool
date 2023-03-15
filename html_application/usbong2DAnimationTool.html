@@ -35,7 +35,6 @@
 //TO-DO: -add: timeline?; remembers: DIRECTOR6, FLASH tool
 //TO-DO: -add: animation delay count textbox
 //TO-DO: -note: location of image sprite file in assets folder, editable using GIMP tool
-//TO-DO: -add: total animation count textbox
 
 -->
 
@@ -128,6 +127,10 @@
 			font-weight: bolder; /*bold;*/
 		}		
 		
+		.SelectAnimDirection {
+			font-size: 22px;
+		}
+		
 		table.TableSetPanel
 		{
 			position: absolute;
@@ -187,6 +190,11 @@
 	var iImageFrameSizeX=0;
 	var iImageFrameSizeY=32;
 */
+	//added by Mike, 20230315
+	var iAnimImageDirection=0; //vertical
+	const AnimImageDirection_VERTICAL=0;
+	const AnimImageDirection_HORIZONTAL=1;
+
 	
 	var bIsWalkingAction=true; //false; 
 		
@@ -507,6 +515,9 @@
 		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
 		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
 	
+		//added by Mike, 20230315
+		var animDirectionSelectedIndex = document.getElementById("selectAnimDirectionId").selectedIndex;
+	
 		//added by Mike, 20230313
 		//reference: https://www.w3schools.com/tags/canvas_fillrect.asp; 
 		//last accessed: 2020911
@@ -651,15 +662,22 @@
 			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+
 										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
 */
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
-										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
 
+			if (animDirectionSelectedIndex==AnimImageDirection_VERTICAL) {
+				humanTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
+										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";	
+			}
+			//AnimImageDirection_HORIZONTAL
+			else {
+				humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
+			}
+			
 			if (iAnimImageFrameCount<(iTotalAnimImageFrameCount-1)) {	
 				iAnimImageFrameCount++;
 			}
 			else {
 				iAnimImageFrameCount=0;
-			}
+			}			
 		}
 		
 /*	//removed by Mike, 20230313		
@@ -823,7 +841,21 @@
 		</td>
 	</tr>
 -->	
-	</table>	
+	<tr>
+		<td>
+			<br/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label class="LabelSet">Animation Frame Direction:</label>
+			<br/>
+			<select id="selectAnimDirectionId" class="SelectAnimDirection">
+  				<option value="VERTICAL">VERTICAL</option>
+  				<option value="HORIZONTAL">HORIZONTAL</option>
+			</select>
+		</td>
+	</tr>
 	
 	</table>
 
