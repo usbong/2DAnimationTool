@@ -504,7 +504,7 @@
 				
 		//added by Mike, 20230315
 		var setPanelTable = document.getElementById("tableSetPanelId");
-		var humanTile = document.getElementById("humanTileImageId");
+		var mainImageTile = document.getElementById("mainImageTileImageId");
 				
 		setAnimImageFrameWidthText.value=iImageFrameWidth;
 		setAnimImageFrameHeightText.value=iImageFrameHeight;
@@ -523,11 +523,12 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px";
 		setPanelTable.style.visibility = "visible";
 		
-		humanTile.style.visibility = "visible";
+		//removed by Mike, 20230321
+		//mainImageTile.style.visibility = "visible";
 	}
 	
 	function myUpdateFunction() {	
-		var humanTile = document.getElementById("humanTileImageId");
+		var mainImageTile = document.getElementById("mainImageTileImageId");
 		//var setAnimImageFrameXButton = document.getElementById("buttonSetAnimImageFrameXId");
 		var setPanelTable = document.getElementById("tableSetPanelId");
 
@@ -560,12 +561,12 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 		iHorizontalOffset=myCanvas.getBoundingClientRect().x;
 		
 		//added by Mike, 20230321
-		humanTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
+		mainImageTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
 
 
 /*
 		// Clip a rectangular area
-		humanTileCtx.rect(0, 0, iImageFrameWidth, iImageFrameHeight);
+		mainImageTileCtx.rect(0, 0, iImageFrameWidth, iImageFrameHeight);
 */
 		
 			//alert("dito");
@@ -595,37 +596,37 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 	
 				if (iFacingDirection==iFACING_DOWN) {
 					//edited by Mike, 20221117
-					//humanTile.style.objectPosition="0px 0px";
+					//mainImageTile.style.objectPosition="0px 0px";
 					
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="0px -32px";
+						mainImageTile.style.objectPosition="0px -32px";
 					}
 					else {
-						humanTile.style.objectPosition="0px 0px";
+						mainImageTile.style.objectPosition="0px 0px";
 					}
 				}
 				else if (iFacingDirection==iFACING_RIGHT) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="-64px -32px";
+						mainImageTile.style.objectPosition="-64px -32px";
 					}
 					else {			
-						humanTile.style.objectPosition="-64px 0px";
+						mainImageTile.style.objectPosition="-64px 0px";
 					}
 				}
 				else if (iFacingDirection==iFACING_LEFT) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="-128px -32px";
+						mainImageTile.style.objectPosition="-128px -32px";
 					}
 					else {
-						humanTile.style.objectPosition="-128px 0px";
+						mainImageTile.style.objectPosition="-128px 0px";
 					}
 				}	
 				else if (iFacingDirection==iFACING_UP) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="-32px -32px";
+						mainImageTile.style.objectPosition="-32px -32px";
 					}
 					else {
-						humanTile.style.objectPosition="-192px 0px";
+						mainImageTile.style.objectPosition="-192px 0px";
 					}
 				}		
 				
@@ -634,34 +635,34 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 			else {
 				if (iFacingDirection==iFACING_DOWN) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="0px -64px";
+						mainImageTile.style.objectPosition="0px -64px";
 					}
 					else {			
-						humanTile.style.objectPosition="-32px 0px";
+						mainImageTile.style.objectPosition="-32px 0px";
 					}
 				}
 				else if (iFacingDirection==iFACING_RIGHT) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="-64px -64px";
+						mainImageTile.style.objectPosition="-64px -64px";
 					}
 					else {			
-						humanTile.style.objectPosition="-96px 0px";
+						mainImageTile.style.objectPosition="-96px 0px";
 					}
 				}
 				else if (iFacingDirection==iFACING_LEFT) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="-128px -64px";
+						mainImageTile.style.objectPosition="-128px -64px";
 					}
 					else {			
-						humanTile.style.objectPosition="-160px 0px";
+						mainImageTile.style.objectPosition="-160px 0px";
 					}
 				}
 				else if (iFacingDirection==iFACING_UP) {
 					if (bIsWalkingAction) {
-						humanTile.style.objectPosition="-32px -64px";
+						mainImageTile.style.objectPosition="-32px -64px";
 					}
 					else {			
-						humanTile.style.objectPosition="-224px 0px";
+						mainImageTile.style.objectPosition="-224px 0px";
 					}
 				}		
 		
@@ -671,32 +672,32 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 			//if (iFacingDirection==iFACING_DOWN) {
 			//if (bIsWalkingAction) {
 			//x, y
-			//humanTile.style.objectPosition="0px -32px";
+			//mainImageTile.style.objectPosition="0px -32px";
 			//notes: negative to move frame window
 			//edited by Mike, 20230312
-//			humanTile.style.objectPosition=(iDefaultAnimationImageX-iAnimImageFrameCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iAnimImageFrameCount*iImageFrameHeight)+"px";
+//			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-iAnimImageFrameCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iAnimImageFrameCount*iImageFrameHeight)+"px";
 /*
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
+			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
 										   (iDefaultAnimationImageY+(iAnimImageFrameCount*(iImageFrameHeight+(iDefaultAnimationImageY-iImageFrameHeight))))+"px";
 */
 /*
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iDefaultAnimationImageX))+"px "+
+			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iDefaultAnimationImageX))+"px "+
 										   (iDefaultAnimationImageY+(iAnimImageFrameCount*iDefaultAnimationImageY))+"px";
 */		
 
 			//TO-DO: -add: in settings, horizontal or vertical animation frame movement in INPUT spritesheet
 /*
-			humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+
+			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+
 										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
 */
 
 			if (animDirectionSelectedIndex==AnimImageDirection_VERTICAL) {
-				humanTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
+				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
 										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";	
 			}
 			//AnimImageDirection_HORIZONTAL
 			else {
-				humanTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
+				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
 			}
 			
 			if (iAnimImageFrameCount<(iTotalAnimImageFrameCount-1)) {	
@@ -711,33 +712,35 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 		//TO-DO: -update: this
 		iHorizontalOffset=0;
 		iVerticalOffsetInnerScreen=0;
-		iHumanTileX=0;
-		iHumanTileY=0;
+		imainImageTileX=0;
+		imainImageTileY=0;
 */
 		
 		//edited by Mike, 20230313	
 /*
-		humanTile.style.left = (iHorizontalOffset+iHumanTileX)+"px";	
-		humanTile.style.top = (iVerticalOffsetInnerScreen+iHumanTileY)+"px";	
+		mainImageTile.style.left = (iHorizontalOffset+imainImageTileX)+"px";	
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+imainImageTileY)+"px";	
 */
 		//added by Mike, 20230313
-		//let iHumanTileX = humanTile.getBoundingClientRect().x;
+		//let imainImageTileX = mainImageTile.getBoundingClientRect().x;
 	
 	//alert(iHorizontalOffset);
 	
-//		humanTile.style.left = (iHorizontalOffset+iStageMaxWidth/2+iHumanTileX)+"px";	
-//		humanTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/3+iHumanTileY)+"px";	
+//		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2+imainImageTileX)+"px";	
+//		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/3+imainImageTileY)+"px";	
 
 //alert(iVerticalOffsetInnerScreen);
 //alert(iStageMaxHeight);
 //alert(setAnimImageFrameHeightText.value);
 
-		humanTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+"px";
+		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+"px";
 		
 		//alert(iStageMaxHeight);
 		
-		humanTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+"px";	
-
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+"px";	
+		
+		//added by Mike, 20230321
+		mainImageTile.style.visibility = "visible";
 
 /*		
 		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
@@ -793,9 +796,9 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 
 		<!--HALLO!-->
 <!--
-		<img id="humanTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
+		<img id="mainImageTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
 -->		
-		<img id="humanTileImageId" class="ImageTileFrame1" src="assets/images/human.png">	
+		<img id="mainImageTileImageId" class="ImageTileFrame1" src="assets/images/human.png">	
 
 <!--	
 		iDefaultAnimationImageX=-32;//0; //default x		
