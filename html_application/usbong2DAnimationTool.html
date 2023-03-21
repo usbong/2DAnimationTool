@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230315; from 20230314
+' @date updated: 20230321; from 20230315
 ' @website: www.usbong.ph
 '
 '
@@ -38,12 +38,15 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-  	<!-- TO-DO: -update: this -->
+<!-- TO-DO: -update: this -->
 <!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
-  	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
 -->
+  	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
 
+
+<!--
   	<base href="http://store.usbong.ph/" target="_blank">
+-->
   </head>
 
   <title>
@@ -101,6 +104,7 @@
 			z-index: -1;							
 		}  
 
+/*
 		.Image32x32TileFrame1 {
 			position: absolute;
   			clip: rect(0px,32px,32px,0px);
@@ -112,7 +116,14 @@
 			position: absolute;
   			clip: rect(0px,32px,32px,0px);
 		}		  
-		
+*/
+		.ImageTileFrame1 {
+			position: absolute;
+  			clip: rect(0px,32px,32px,0px);
+			
+			visibility: hidden;			
+		}
+
 		.ButtonSet, .TextInputSet {		
 			position: relative; /*absolute;*/			
 			font-size: 20px;
@@ -437,7 +448,7 @@
 		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
 				
 		//alert(setAnimImageFrameXText.value);				
-		iImageFrameWidth=setAnimImageFrameWidthText.value;//-32;
+		iImageFrameWidth=setAnimImageFrameWidthText.value;//-32;		
 	}
 	
 	function setAnimImageFrameHeight() {	
@@ -525,7 +536,7 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 	
 		//added by Mike, 20230315
 		var animDirectionSelectedIndex = document.getElementById("selectAnimDirectionId").selectedIndex;
-	
+			
 		//added by Mike, 20230313
 		//reference: https://www.w3schools.com/tags/canvas_fillrect.asp; 
 		//last accessed: 2020911
@@ -547,8 +558,16 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 
 		//added by Mike, 20221012
 		iHorizontalOffset=myCanvas.getBoundingClientRect().x;
-	
-	
+		
+		//added by Mike, 20230321
+		humanTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
+
+
+/*
+		// Clip a rectangular area
+		humanTileCtx.rect(0, 0, iImageFrameWidth, iImageFrameHeight);
+*/
+		
 			//alert("dito");
 
 /*		//removed by Mike, 20230312
@@ -773,7 +792,10 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 -->
 
 		<!--HALLO!-->
+<!--
 		<img id="humanTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
+-->		
+		<img id="humanTileImageId" class="ImageTileFrame1" src="assets/images/human.png">	
 
 <!--	
 		iDefaultAnimationImageX=-32;//0; //default x		
