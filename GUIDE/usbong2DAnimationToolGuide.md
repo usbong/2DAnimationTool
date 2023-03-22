@@ -12,6 +12,9 @@
 
 <img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage3.jpg" width="80%">
 
+## GIMP Image Manipulation Editor Tool: https://www.gimp.org/
+
+
 ## Page 4
 
 <img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage4.jpg" width="80%">
