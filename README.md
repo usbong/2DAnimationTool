@@ -2,19 +2,29 @@
 
 Web Service tool to assist with creating animating 2D sprite images
 
-### CURRENT work-in-progress version: 
+### DEMO version: 
 
 http://store.usbong.ph/html_application/usbong2DAnimationTool.html
 
+### DOWNLOAD TOOL:
+
+https://github.com/usbong/2DAnimationTool.git
+
 ## GUIDE
 
-[<img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="80%">](https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/usbong2DAnimationToolGuide.md)
+[<img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="60%">](https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/usbong2DAnimationToolGuide.md)
 
 ## References
 
 1) https://github.com/usbong/game-off-2022
 
 2) [Lessons-learned: GAME MAKER STUDIO](https://github.com/usbong/newsletters/blob/main/notes/LessonsLearned/GameMakerStudio/GameMakerStudioV20230216.md)
+
+## Additional Useful Tools
+
+1) https://www.gimp.org/; last accessed: 20230322
+
+2) https://www.libreoffice.org/; last accessed: 20230322
 
 ## Open Source Software License
 Copyright 2023 SYSON, MICHAEL B.
