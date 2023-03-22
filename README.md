@@ -6,10 +6,9 @@ Web Service tool to assist with creating animating 2D sprite images
 
 http://store.usbong.ph/html_application/usbong2DAnimationTool.html
 
-### SCREENSHOTS
+## GUIDE
 
-#### 1) version: 20230313
-<img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/2DAnimationToolV20230313.jpg" width="100%">
+[<img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="80%">](https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/usbong2DAnimationToolGuide.md)
 
 ## References
 
