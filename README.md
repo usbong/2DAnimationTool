@@ -10,6 +10,16 @@ http://store.usbong.ph/html_application/usbong2DAnimationTool.html
 
 https://github.com/usbong/2DAnimationTool.git
 
+### INSTALLER:
+
+#### LINUX Operating System
+
+[./install.sh](https://github.com/usbong/2DAnimationTool/blob/main/install.sh)
+
+#### WINDOWS Operating System
+
+TO-DO: -update: this
+
 ## GUIDE
 
 [<img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="60%">](https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/usbong2DAnimationToolGuide.md)
