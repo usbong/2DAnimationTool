@@ -28,15 +28,15 @@ echo "Usbong 2D Animation Tool";
 echo "Installing...";
 echo "--";
 
-mkdir $sBaseDir/usbong_2DAnimationToolZERO
+mkdir $sBaseDir/usbong_2DAnimationTool
 
 echo "--";
 echo "Transferring Files...";
 
-cp -r ./html_application $sBaseDir/usbong_2DAnimationToolZERO
+cp -r ./html_application $sBaseDir/usbong_2DAnimationTool
 
-cp -r ./assets $sBaseDir/usbong_2DAnimationToolZERO
-cp -r ./GUIDE $sBaseDir/usbong_2DAnimationToolZERO
+cp -r ./assets $sBaseDir/usbong_2DAnimationTool
+cp -r ./GUIDE $sBaseDir/usbong_2DAnimationTool
 
 echo "--";
 echo "Installation Complete.";
