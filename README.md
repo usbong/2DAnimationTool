@@ -22,7 +22,7 @@ TO-DO: -update: this
 
 ## GUIDE
 
-[<img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="60%">](https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/usbong2DAnimationToolGuide.md)
+[<img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="70%">](https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/usbong2DAnimationToolGuide.md)
 
 ## References
 
