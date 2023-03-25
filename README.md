@@ -10,11 +10,15 @@ http://store.usbong.ph/html_application/usbong2DAnimationTool.html
 
 https://github.com/usbong/2DAnimationTool.git
 
-## INSTALLER:
+## EXECUTION
 
-#### LINUX OS: [./install.sh](https://github.com/usbong/2DAnimationTool/blob/main/install.sh)
+### OPEN in Web Browser
 
-#### WINDOWS OS: [install.bat](https://github.com/usbong/2DAnimationTool/blob/main/install.bat)
+2DAnimationTool-main/html_application/<b>usbong2DAnimationTool.html</b>
+
+### INPUT Image File location 
+
+2DAnimationTool-main/assets/images/<b>inputImage.png</b>
 
 ## GUIDE
 
