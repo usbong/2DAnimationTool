@@ -8,16 +8,11 @@
 
 <img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage2.jpg" width="80%">
 
-## Local Web Address BASE: http://localhost/usbong_2DAnimationTool/
-
 ## Page 3
 
 <img src="https://github.com/usbong/2DAnimationTool/blob/main/GUIDE/2DAnimationToolGuideSlideSetJpgVersion/usbong2DAnimationToolGuidePage3.jpg" width="80%">
 
 ## GIMP Image Manipulation Editor Tool: https://www.gimp.org/
-
-## LOCATION (WINDOWS): http://localhost/usbong_2DAnimationTool/assets/images/
-
 
 ## Page 4
 
