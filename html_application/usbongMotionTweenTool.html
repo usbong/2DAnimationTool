@@ -171,14 +171,29 @@
 	const iKEY_S = 1;
 	const iKEY_A = 2;
 	const iKEY_D = 3;
-	
+
+	//edited by Mike, 20230418
+/*
 	const iKEY_I = 4;
 	const iKEY_K = 5;
 	const iKEY_J = 6;
 	const iKEY_L = 7;
-		
-	const iTotalKeyCount = 8; //4;	
-	const iDirectionTotalKeyCount = 4;	
+*/
+
+	//added by Mike, 20230418
+	const iKEY_Q = 4; //TOP-LEFT
+	const iKEY_E = 5; //TOP-RIGHT
+	const iKEY_C = 6; //BOTTOM-RIGHT
+	const iKEY_Z = 7; //BOTTOM-LEFT
+	
+	const iKEY_I = 8;
+	const iKEY_K = 9;
+	const iKEY_J = 10;
+	const iKEY_L = 11;
+
+	//edited by Mike, 20230418
+	const iTotalKeyCount = 12; //8; //4;	
+	const iDirectionTotalKeyCount = 8; //4;	
 	
 	var arrayCountMovementStep= [];
 	
@@ -232,8 +247,9 @@
 	//added by Mike, 20230410
 	var mainImageTilePosX=0;
 	var mainImageTilePosY=0;
-	var mainImageTileStepX=2;
-	var mainImageTileStepY=2;
+	//edited by Mike, 20230418
+	var mainImageTileStepX=0; //2;
+	var mainImageTileStepY=0; //2;
 		
 	//edited by Mike, 20230314
 /*	
@@ -317,9 +333,15 @@
 	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
 	//edited by Mike, 20230418
 //	function autoGeneratePuzzleFromEnd() {
-	//TO-DO: -add: diagonal; combination of horizontal and vertical movements
+	//added: diagonal; combination of horizontal and vertical movements
+	//TO-DO: -verify: ellipse movement;
 	function autoIdentifyNextDirectionAI() {
-		sRecordedSteps="3121220312133003112111302212133333303312003030030303133122112122121303033033311212002";
+		//edited by Mike, 20230418
+		//sRecordedSteps="3121220312133003112111302212133333303312003030030303133122112122121303033033311212002";
+
+		//sRecordedSteps="6666666666133003112111302212133333303312003030030303133122112122121303033033311212002";
+		sRecordedSteps="66666666333555555000444444222133333303312003030030303133122112122121303033033311212002";
+
 /*
 		var puzzleRecordedStepsSpan = document.getElementById("puzzleRecordedStepsId");
 		sRecordedSteps=puzzleRecordedStepsSpan.innerHTML;
@@ -392,6 +414,24 @@
 					mainImageTileStepX=2;
 					mainImageTileStepY=0;
 					break;	
+
+				//DIAGONAL PART
+				case iKEY_Q: //4; TOP-LEFT
+					mainImageTileStepX=-2;
+					mainImageTileStepY=-2;
+					break;	
+				case iKEY_E: //5; TOP-RIGHT
+					mainImageTileStepX=2;
+					mainImageTileStepY=-2;
+					break;	
+				case iKEY_C: //6; BOTTOM-RIGHT
+					mainImageTileStepX=2;
+					mainImageTileStepY=2;
+					break;	
+				case iKEY_Z: //7; BOTTOM-LEFT
+					mainImageTileStepX=-2;
+					mainImageTileStepY=2;
+					break;						
 			}
 	
 /*	
