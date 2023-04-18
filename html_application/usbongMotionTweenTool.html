@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230410; from 20230322
+' @date updated: 20230418; from 20230410
 ' @website: www.usbong.ph
 '
 '
@@ -160,6 +160,9 @@
 	var iCountMovementStep=0;
 	const iCountInitMovementStepMax=15;
 	const iCountMovementStepMax=100-iCountInitMovementStepMax;
+	//added by Mike, 20230418
+	var iCountMovementStepDelay=0;
+	var iCountMovementStepDelayMax=10;
 	
 	var iPrevDirection=0;
 	var bIsInitAutoGeneratePuzzleFromEnd=true;
@@ -203,7 +206,10 @@
 	var iImageFrameSizeY=32;
 */
 	//added by Mike, 20230315
-	var iAnimImageDirection=0; //vertical
+	//edited by Mike, 20230418
+	//var iAnimImageDirection=0; //vertical
+	var iAnimImageDirection=1; //horizontal
+
 	const AnimImageDirection_VERTICAL=0;
 	const AnimImageDirection_HORIZONTAL=1;
 
@@ -309,86 +315,40 @@
 	//reference: timeoff.php
 	//TO-DO: -update: this
 	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
-	function autoGeneratePuzzleFromEnd() {
-
-			//sRecordedSteps="3121220312133003112111302212133333303312003030030303133122112122121303033033311212002";
-
+	//edited by Mike, 20230418
+//	function autoGeneratePuzzleFromEnd() {
+	//TO-DO: -add: diagonal; combination of horizontal and vertical movements
+	function autoIdentifyNextDirectionAI() {
+		sRecordedSteps="3121220312133003112111302212133333303312003030030303133122112122121303033033311212002";
+/*
 		var puzzleRecordedStepsSpan = document.getElementById("puzzleRecordedStepsId");
 		sRecordedSteps=puzzleRecordedStepsSpan.innerHTML;
-
+*/
+		
 	/*
 		arrayKeyPressed[iKEY_A]=true;	
 		arrayKeyPressed[iKEY_K]=true;
 	*/
-		
-		//added by Mike, 20221213
-		//-----------------------------------------
-		//notes: 15 steps
-		
-		//added by Mike, 20221108
-		//move all outer tiles
-		//to: left corner
-		if (!bIsToLeftCornerDone) {
-			if (iCountMovementStep<iColumnCountMax) {
-				arrayKeyPressed[iKEY_A]=true;	
-				arrayKeyPressed[iKEY_K]=true;
-				iCountMovementStep++;		
 
-				return;
-			}
-			iCountMovementStep=0;
-			bIsToLeftCornerDone=true;
-			
-	/*		
-			//added by Mike, 20221111; removed by Mike, 20221111
-			//note: add to quickly verify end OUTPUT
-			bIsInitAutoGeneratePuzzleFromEnd=false;
-			return;
-	*/	
-		}
-					
-		if (!bIsToTopCornerDone) {
-			//to: top corner	
-			if (iCountMovementStep<iRowCountMax) {
-				arrayKeyPressed[iKEY_W]=true;	
-				arrayKeyPressed[iKEY_K]=true;
-				iCountMovementStep++;
-				return;
-			}
-			iCountMovementStep=0;
-			bIsToTopCornerDone=true;
-		}
-
-		if (!bIsToRightCornerDone) {	
-			//to: right corner
-			if (iCountMovementStep<iColumnCountMax) {
-				arrayKeyPressed[iKEY_D]=true;	
-				arrayKeyPressed[iKEY_K]=true;
-				iCountMovementStep++;		
-				return;
-			}
-			iCountMovementStep=0;
-			bIsToRightCornerDone=true;
-		}
-
-		if (!bIsToBottomCornerDone) {	
-			//to: bottom corner -1	
-			if (iCountMovementStep<iRowCountMax-1) {
-				arrayKeyPressed[iKEY_S]=true;	
-				arrayKeyPressed[iKEY_K]=true;
-				iCountMovementStep++;
-				return;
-			}
-			iCountMovementStep=0;
-			bIsToBottomCornerDone=true;
-		}
-		//-----------------------------------------
-		
+/* //added by Mike, 20230418
+		mainImageTileStepX=2;
+		mainImageTileStepY=0;
+				
+		return;
+*/	
 		
 		//reference: https://www.w3schools.com/jsref/jsref_random.asp;
 		//last accessed: 20221108
 		//number between 0 and 4; integer only	
 	//	for (iCount=0; iCount<iCountMovementStepMax; iCount++) {
+		
+		if (iCountMovementStepDelay<iCountMovementStepDelayMax) {
+			iCountMovementStepDelay=iCountMovementStepDelay+1;
+			return;
+		}
+		else {
+			iCountMovementStepDelay=0;
+		}
 		
 		if (iCountMovementStep<iCountMovementStepMax) {
 			
@@ -398,83 +358,46 @@
 			
 			//OK
 			let iDirection=parseInt(sRecordedSteps.substr(iCountMovementStep,1));		
-
-			
-			//added by Mike, 20221129
-			//objective: reduce immediate left-right 
-			//and up-down movements
-			//keyphrase: Artificial Intelligence
-			//-----
-			switch (iPrevDirection) {
-				case iKEY_W: //0
-					if (iDirection==iKEY_S) {
-						if (iDirection%2==0) {
-							iDirection=iKEY_A;
-						}
-						else {
-							iDirection=iKEY_D;
-						}
-					}
-					break;	
-				case iKEY_S: //1
-					if (iDirection==iKEY_W) {
-						if (iDirection%2==0) {
-							iDirection=iKEY_A;
-						}
-						else {
-							iDirection=iKEY_D;
-						}
-					}
-					break;	
-				case iKEY_A: //2
-					if (iDirection==iKEY_D) {
-						if (iDirection%2==0) {
-							iDirection=iKEY_W;
-						}
-						else {
-							iDirection=iKEY_S;
-						}
-					}
-					break;	
-				case iKEY_D: //3
-					if (iDirection==iKEY_A) {
-						if (iDirection%2==0) {
-							iDirection=iKEY_W;
-						}
-						else {
-							iDirection=iKEY_S;
-						}
-					}
-					break;	
-			}		
-			
-			iPrevDirection=iDirection;
-			
-			//-----
-			
 			
 			switch (iDirection) {
 				case iKEY_W: //0
+/*
 					arrayKeyPressed[iKEY_W]=true;	
 					arrayKeyPressed[iKEY_K]=true;						
+*/					
+					mainImageTileStepX=0;
+					mainImageTileStepY=-2;
 					break;	
 				case iKEY_S: //1
+/*
 					arrayKeyPressed[iKEY_S]=true;	
 					arrayKeyPressed[iKEY_K]=true;
+*/
+					mainImageTileStepX=0;
+					mainImageTileStepY=2;
 					break;	
 				case iKEY_A: //2
+/*
 					arrayKeyPressed[iKEY_A]=true;	
 					arrayKeyPressed[iKEY_K]=true;
+*/					
+					mainImageTileStepX=-2;
+					mainImageTileStepY=0;
 					break;	
 				case iKEY_D: //3
+/*
 					arrayKeyPressed[iKEY_D]=true;	
-					arrayKeyPressed[iKEY_K]=true;			
+					arrayKeyPressed[iKEY_K]=true;
+*/					
+					mainImageTileStepX=2;
+					mainImageTileStepY=0;
 					break;	
 			}
-			
+	
+/*	
 			//added by Mike, 20221214
 			arrayCountMovementStep[iCountMovementStep]=iDirection;
-				
+*/				
 			
 			iCountMovementStep++;
 		}	
@@ -509,7 +432,9 @@
 		iDefaultAnimationImageX=0;//-32; //default x		
  		iDefaultAnimationImageY=0;//-32; //default y
 
-		iTotalAnimImageFrameCount=4;//2;
+		//edited by Mike, 20230418
+		//iTotalAnimImageFrameCount=4;//2;
+		iTotalAnimImageFrameCount=2;
 
 		//edited by Mike, 20230322
 		iImageFrameWidth=64;// 32; //0;
@@ -773,7 +698,12 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 //		mainImageTilePosX++;
 //		mainImageTilePosX--;
 //		mainImageTilePosY++;
-		mainImageTilePosY+=mainImageTileStepY; //goes downward
+				
+		//edited by Mike, 20230418
+		autoIdentifyNextDirectionAI();
+		
+		mainImageTilePosX+=mainImageTileStepX //horizontal movement;
+		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
 		
 		//TO-DO: -add: function; AI; Artificial Intelligence
 		//combination of forward, diagonal movements
