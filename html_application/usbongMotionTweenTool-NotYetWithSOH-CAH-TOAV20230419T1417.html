@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230421; from 20230419
+' @date updated: 20230419; from 20230418
 ' @website: www.usbong.ph
 '
 '
@@ -160,16 +160,9 @@
 	var iCountMovementStep=0;
 	const iCountInitMovementStepMax=15;
 	const iCountMovementStepMax=100-iCountInitMovementStepMax;
-	//edited by Mike, 20230421; from 20230418
+	//added by Mike, 20230418
 	var iCountMovementStepDelay=0;
-	const iCountMovementStepDelayMax=10;
-
-	//added by Mike, 20230421
-	//SOH-CAH-TOA
-	//note: Max increase incrementally angle to end destination
-	const iCountMovementDiagonalStepMax=5; //10 
-	var iCountMovementDiagonalStep=iCountMovementDiagonalStepMax;
-	var iMainImageTileStepAngle=0;
+	var iCountMovementStepDelayMax=10;
 	
 	var iPrevDirection=0;
 	var bIsInitAutoGeneratePuzzleFromEnd=true;
@@ -201,9 +194,6 @@
 	//edited by Mike, 20230418
 	const iTotalKeyCount = 12; //8; //4;	
 	const iDirectionTotalKeyCount = 8; //4;	
-	
-	//added by Mike, 20230421
-	var iDirection=-1;
 	
 	var arrayCountMovementStep= [];
 	
@@ -351,12 +341,8 @@
 
 		//edited by Mike, 20230419
 		//sRecordedSteps="6666666666133003112111302212133333303312003030030303133122112122121303033033311212002";
-		//edited by Mike, 20230421
-//		sRecordedSteps="111111111116633333333333550000004422222222220";
-//		sRecordedSteps="66";
-//		sRecordedSteps="663355";//004422";
-//		sRecordedSteps="66666663355";//004422";
-		sRecordedSteps="6666666333550004422277111";
+		sRecordedSteps="111111111116633333333333550000004422222222220";
+
 
 /*
 		var puzzleRecordedStepsSpan = document.getElementById("puzzleRecordedStepsId");
@@ -395,10 +381,8 @@
 			//let iDirection = window.parseInt(Math.random() * 4);	
 			
 			//OK
-			//edited by Mike, 20230421
-			//let iDirection=parseInt(sRecordedSteps.substr(iCountMovementStep,1));		
-			iDirection=parseInt(sRecordedSteps.substr(iCountMovementStep,1));		
-						
+			let iDirection=parseInt(sRecordedSteps.substr(iCountMovementStep,1));		
+			
 			switch (iDirection) {
 				case iKEY_W: //0
 /*
@@ -407,9 +391,6 @@
 */					
 					mainImageTileStepX=0;
 					mainImageTileStepY=-2;
-					
-					//added by Mike, 20230421
-					//iMainImageTileStepAngleiMainImageTileStepAngle=0;					
 					break;	
 				case iKEY_S: //1
 /*
@@ -418,9 +399,6 @@
 */
 					mainImageTileStepX=0;
 					mainImageTileStepY=2;
-
-					//added by Mike, 20230421
-					//iMainImageTileStepAngle=0;					
 					break;	
 				case iKEY_A: //2
 /*
@@ -429,9 +407,6 @@
 */					
 					mainImageTileStepX=-2;
 					mainImageTileStepY=0;
-
-					//added by Mike, 20230421
-					//iMainImageTileStepAngle=0;					
 					break;	
 				case iKEY_D: //3
 /*
@@ -440,77 +415,24 @@
 */					
 					mainImageTileStepX=2;
 					mainImageTileStepY=0;
-
-					//added by Mike, 20230421
-					//iMainImageTileStepAngle=0;					
 					break;	
 
 				//DIAGONAL PART
 				case iKEY_Q: //4; TOP-LEFT
 					mainImageTileStepX=-2;
 					mainImageTileStepY=-2;
-					
-					//added by Mike, 20230421
-					iMainImageTileStepAngle=90+45;
-					
-					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
-						iCountMovementDiagonalStep++;
-						return;
-					}
-					else {
-						iCountMovementDiagonalStep=0;
-					}
 					break;	
 				case iKEY_E: //5; TOP-RIGHT
 					mainImageTileStepX=2;
 					mainImageTileStepY=-2;
-
-					//added by Mike, 20230421
-					//alert(iMainImageTileStepAngle);
-					//alert("iCountMovementDiagonalStep: "+iCountMovementDiagonalStep);
-					
-					//iMainImageTileStepAngle=(360-iMainImageTileStepAngle)+45;
-					iMainImageTileStepAngle=45;
-
-					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
-						iCountMovementDiagonalStep++;
-						return;
-					}
-					else {
-						iCountMovementDiagonalStep=0;
-					}
 					break;	
 				case iKEY_C: //6; BOTTOM-RIGHT
 					mainImageTileStepX=2;
 					mainImageTileStepY=2;
-					
-					//alert(iCountMovementDiagonalStep);
-
-					//added by Mike, 20230421
-					iMainImageTileStepAngle=270+45;
-					
-					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
-						iCountMovementDiagonalStep++;
-						return;
-					}
-					else {
-						iCountMovementDiagonalStep=0;
-					}
 					break;	
 				case iKEY_Z: //7; BOTTOM-LEFT
 					mainImageTileStepX=-2;
-					mainImageTileStepY=2;					
-
-					//added by Mike, 20230421
-					iMainImageTileStepAngle=180+45;
-
-					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
-						iCountMovementDiagonalStep++;
-						return;
-					}
-					else {
-						iCountMovementDiagonalStep=0;
-					}
+					mainImageTileStepY=2;
 					break;						
 			}
 	
@@ -821,64 +743,9 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 				
 		//edited by Mike, 20230418
 		autoIdentifyNextDirectionAI();
-
-		//edited by Mike, 20230421
-/*
-		mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
+		
+		mainImageTilePosX+=mainImageTileStepX //horizontal movement;
 		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
-*/
-		if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
-/*		
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(45);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(45);
-*/
-
-/*
-			var mainImageTileStepYDirection = 1; //mainImageTileStepY;
-			var mainImageTileStepXDirection = 1; //mainImageTileStepX;
-
-			if (mainImageTileStepY<0) {
-				mainImageTileStepYDirection*=-1;
-			}
-
-			if (mainImageTileStepX<0) {
-				mainImageTileStepXDirection*=-1;
-			}
-*/
-			
-/*
-			alert("iMainImageTileStepAngle: "+iMainImageTileStepAngle);
-			alert("mainImageTilePosY: "+mainImageTilePosY);
-*/			
-
-			//alert(iCountMovementDiagonalStep);
-			
-			//edited by Mike, 20230421
-			//convert degrees to radians; input to Math.sin, Math.cos
-			//reference: https://www.w3schools.com/python/ref_math_sin.asp;
-			//last accessed: 20230421
-
-			var fMainImageTileStepAngleRad=Math.radians(iMainImageTileStepAngle);
-
-			/*			
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(iMainImageTileStepAngle);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(iMainImageTileStepAngle);
-*/
-
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
-
-			
-/*
-			alert(mainImageTilePosY);
-*/			
-			iCountMovementDiagonalStep++;
-		}
-		else {
-			mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
-			mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
-		}
-
 		
 		//TO-DO: -add: function; AI; Artificial Intelligence
 		//combination of forward, diagonal movements
