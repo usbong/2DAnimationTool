@@ -1,0 +1,1057 @@
+<!--
+/*
+' Copyright 2022~2023 USBONG
+'
+' Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You ' may obtain a copy of the License at
+'
+' http://www.apache.org/licenses/LICENSE-2.0
+'
+' Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, ' WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing ' permissions and limitations under the License.
+'
+' @company: USBONG
+' @author: SYSON, MICHAEL B.
+' @date created: 20221214
+' @date updated: 20230422; from 20230421
+' @website: www.usbong.ph
+'
+'
+' Notes:
+' 1) website address: http://localhost/usbong_2DAnimationTool/html_application/usbongMotionTweenTool.html;
+' last accessed: 20230410
+'
+' References:
+' 1) https://phantomjs.org/; last accessed: 20200724
+' downloaded phantomjs zipped file's examples: netsniff.js; last accessed: 20200725
+'
+' 2) https://nodejs.org/en/download/; last accessed: 20221214
+' execute: .js file via: node halimbawa.js
+' https://askubuntu.com/questions/1297994/what-is-the-simplest-way-to-run-javascript-code-on-ubuntu; last accessed: 20221214
+'
+' 3) http://localhost/usbong_2DAnimationTool/html_application/usbong2DAnimationTool.html;
+' last accessed: 20230311
+'*/
+//added by Mike, 20230313
+//TO-DO: -add: adjustable "STAGE" SIZE textbox
+//TO-DO: -add: timeline?; remembers: DIRECTOR6, FLASH tool
+//TO-DO: -note: location of image sprite file in assets folder, editable using GIMP tool
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+<!-- TO-DO: -update: this -->
+<!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
+-->
+  	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
+
+
+<!--
+  	<base href="http://store.usbong.ph/" target="_blank">
+-->
+  </head>
+
+  <title>
+    Usbong Motion Tween Tool
+  </title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <style type="text/css">  
+		html, body
+        {
+            font-family: Arial;
+			font-size: 11pt;
+				
+			/* edited by Mike, 20220911
+			width: 640px; 
+			*/
+			width: 100%; /*90%; 80%;*/
+			height: 100%;
+										
+			padding: 0;
+			margin: 0;
+			
+			/* //added by Mike, 20221002
+			//reference: https://www.w3schools.com/howto/howto_css_disable_text_selection.asp;
+			//last accessed: 20221002
+			*/
+			
+			-webkit-user-select: none; /* Safari */
+			-ms-user-select: none; /* IE 10 and IE 11 */
+			user-select: none; /* Standard syntax */
+			
+			/* added by Mike, 20221012 */
+			transform: scale(1.0);
+			
+			/* added by Mike, 20221119 */							
+			touch-action: none;
+		}  
+  
+		canvas.myCanvas {			
+			padding: 0;
+			margin: auto;							
+			display: block;
+			
+/*
+			width: 320px;
+			height: 288px;	
+*/
+
+			width: 448px; /*640px;*/
+			height: 402px; /*576px;*/
+			
+			border: 1px solid gray;
+
+			z-index: -1;							
+		}  
+
+/*
+		.Image32x32TileFrame1 {
+			position: absolute;
+  			clip: rect(0px,32px,32px,0px);
+			
+			visibility: hidden;			
+		}
+		.ImageTextInputSet32x32TileFrame2 {
+			position: absolute;
+  			clip: rect(0px,32px,32px,0px);
+		}		  
+*/
+		.ImageTileFrame1 {
+			position: absolute;
+  			clip: rect(0px,32px,32px,0px);
+			
+			visibility: hidden;			
+		}
+
+		.ButtonSet, .TextInputSet {		
+			position: relative; /*absolute;*/			
+			font-size: 20px;
+		}
+		
+		.LabelSet {		
+			position: relative; /*absolute;*/			
+			font-size: 24px;
+			
+			font-weight: bolder; /*bold;*/
+		}		
+		
+		.SelectAnimDirection {
+			font-size: 22px;
+		}
+		
+		table.TableSetPanel
+		{
+			position: absolute;
+			border: 2px dotted #ab9c7d;		
+			margin-top: 0px; /*10px*/
+			
+			visibility: hidden;
+		}						
+
+		
+  </style>
+
+  <script>  
+	//added by Mike, 20221214
+	var iCountMovementStep=0;
+	const iCountInitMovementStepMax=15;
+	const iCountMovementStepMax=100-iCountInitMovementStepMax;
+	//edited by Mike, 20230421; from 20230418
+	var iCountMovementStepDelay=0;
+	const iCountMovementStepDelayMax=10;
+
+	//added by Mike, 20230421
+	//SOH-CAH-TOA
+	//note: Max increase incrementally angle to end destination
+	const iCountMovementDiagonalStepMax=5; //10 
+	var iCountMovementDiagonalStep=iCountMovementDiagonalStepMax;
+	var iMainImageTileStepAngle=0;
+	
+	var iPrevDirection=0;
+	var bIsInitAutoGeneratePuzzleFromEnd=true;
+	
+	const iKEY_W = 0;
+	const iKEY_S = 1;
+	const iKEY_A = 2;
+	const iKEY_D = 3;
+
+	//edited by Mike, 20230418
+/*
+	const iKEY_I = 4;
+	const iKEY_K = 5;
+	const iKEY_J = 6;
+	const iKEY_L = 7;
+*/
+
+	//added by Mike, 20230418
+	const iKEY_Q = 4; //TOP-LEFT
+	const iKEY_E = 5; //TOP-RIGHT
+	const iKEY_C = 6; //BOTTOM-RIGHT
+	const iKEY_Z = 7; //BOTTOM-LEFT
+	
+	const iKEY_I = 8;
+	const iKEY_K = 9;
+	const iKEY_J = 10;
+	const iKEY_L = 11;
+
+	//edited by Mike, 20230418
+	const iTotalKeyCount = 12; //8; //4;	
+	const iDirectionTotalKeyCount = 8; //4;	
+	
+	//added by Mike, 20230421
+	var iDirection=-1;
+	
+	var arrayCountMovementStep= [];
+	
+	//added by Mike, 20230311
+	var iFacingDirection=0;
+	
+	const iFACING_DOWN=0;
+	const iFACING_UP=1;
+	const iFACING_LEFT=2;
+	const iFACING_RIGHT=3;	
+
+	//edited by Mike, 20230314
+	//note: VALUES set in init()
+	//const iTotalAnimImageFrameCount=2;//6;
+	var iTotalAnimImageFrameCount;//=4;//6;
+	var iAnimImageFrameCount;//=0;	 
+	
+	var iDefaultAnimationImageX;//=0; //default x
+	var iDefaultAnimationImageY;//=0;//-32; //default y
+	
+//	var iTotalAnimImageFrameCount=4;
+
+	/*	//removed by Mike, 20230312
+	var iImageFrameSizeX=0;
+	var iImageFrameSizeY=32;
+*/
+	//added by Mike, 20230315
+	//edited by Mike, 20230418
+	//var iAnimImageDirection=0; //vertical
+	var iAnimImageDirection=1; //horizontal
+
+	const AnimImageDirection_VERTICAL=0;
+	const AnimImageDirection_HORIZONTAL=1;
+
+	
+	var bIsWalkingAction=true; //false; 
+		
+	//edited by Mike, 20221129
+	//1000/60=16.66; 60 frames per second
+	//1000/30=33.33; 30 frames 
+	const fFramesPerSecondDefault=16.66;
+	//const fFramesPerSecondDefault=33.33;
+	var fFramesPerSecond=fFramesPerSecondDefault;
+	var iCurrentIntervalId=-1;	
+
+	//edited by Mike, 20230315; from 20230311
+	//adds 6 frames before frame update
+	var iDelayAnimationCountMovementStep=0;
+	var iDelayAnimationCountMovementStepMax=12; //6; 
+
+	//added by Mike, 20230410
+	var mainImageTilePosX=0;
+	var mainImageTilePosY=0;
+	//edited by Mike, 20230418
+	var mainImageTileStepX=0; //2;
+	var mainImageTileStepY=0; //2;
+		
+	//edited by Mike, 20230314
+/*	
+	const iStageMaxWidth=160*2; //160;
+	const iStageMaxHeight=144*2; //144;
+*/
+	//TO-DO: -add: auto-update Canvas' width and height to be EXACT
+	var iStageMaxWidth=448; //640;
+	var iStageMaxHeight=402; //576;
+
+	var iHorizontalOffset=0;
+	var iVerticalOffset=0;
+
+	//note: for INNER SCREEN
+	iHorizontalOffset=(screen.width)/2-iStageMaxWidth/2;	
+	iVerticalOffsetInnerScreen=0;
+
+
+	//added by Mike, 20230312
+	//note: press TAB, then ENTER to SET		
+	function setAnimImageFrameX() {	
+		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
+		
+		//notes: auto-sets to negative number;
+		//TO-DO: -add: a checkbox as switch?
+		if (setAnimImageFrameXText.value>0) {
+			setAnimImageFrameXText.value=setAnimImageFrameXText.value*-1;
+		}
+		
+		//alert(setAnimImageFrameXText.value);				
+		iDefaultAnimationImageX=setAnimImageFrameXText.value;//-32;
+	}
+
+	function setAnimImageFrameY() {	
+		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
+		
+		//notes: auto-sets to negative number;
+		//TO-DO: -add: a checkbox as switch?
+		if (setAnimImageFrameYText.value>0) {
+			setAnimImageFrameYText.value=setAnimImageFrameYText.value*-1;
+		}
+		
+		//alert(setAnimImageFrameXText.value);				
+		iDefaultAnimationImageY=setAnimImageFrameYText.value;//-32;
+	}
+
+	function setAnimImageFrameWidth() {	
+		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
+				
+		//alert(setAnimImageFrameXText.value);				
+		iImageFrameWidth=setAnimImageFrameWidthText.value;//-32;		
+	}
+	
+	function setAnimImageFrameHeight() {	
+		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
+				
+		//alert(setAnimImageFrameXText.value);				
+		iImageFrameHeight=setAnimImageFrameHeightText.value;//-32;
+	}
+	
+	function setAnimDelay() {	
+		var setAnimDelayText = document.getElementById("textSetAnimDelayId");
+					iDelayAnimationCountMovementStepMax=setAnimDelayText.value;
+	}
+
+	function setTotalAnimImageFrameCount() {	
+		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
+	
+		//notes: auto-sets to positive number;
+		if (setTotalAnimImageFrameCountText.value<0) {
+			setTotalAnimImageFrameCountText.value=setTotalAnimImageFrameCountText.value*-1;
+		}
+	
+		//edited by Mike, 20230314
+		iTotalAnimImageFrameCount=setTotalAnimImageFrameCountText.value;
+	}
+	
+	//added by Mike, 20230410
+	//reference: timeoff.php
+	//TO-DO: -update: this
+	//note: Carnage Heart from Videogame Magazines, Artificial Intelligence 
+	//edited by Mike, 20230418
+//	function autoGeneratePuzzleFromEnd() {
+	//added: diagonal; combination of horizontal and vertical movements
+	//TO-DO: -verify: ellipse movement;
+	function autoIdentifyNextDirectionAI() {
+		//edited by Mike, 20230418
+		//sRecordedSteps="3121220312133003112111302212133333303312003030030303133122112122121303033033311212002";
+
+		//edited by Mike, 20230419
+		//sRecordedSteps="6666666666133003112111302212133333303312003030030303133122112122121303033033311212002";
+		//edited by Mike, 20230421
+//		sRecordedSteps="111111111116633333333333550000004422222222220";
+//		sRecordedSteps="66";
+//		sRecordedSteps="663355";//004422";
+//		sRecordedSteps="66666663355";//004422";
+		sRecordedSteps="6666666333550004422277111";
+
+/*
+		var puzzleRecordedStepsSpan = document.getElementById("puzzleRecordedStepsId");
+		sRecordedSteps=puzzleRecordedStepsSpan.innerHTML;
+*/
+		
+	/*
+		arrayKeyPressed[iKEY_A]=true;	
+		arrayKeyPressed[iKEY_K]=true;
+	*/
+
+/* //added by Mike, 20230418
+		mainImageTileStepX=2;
+		mainImageTileStepY=0;
+				
+		return;
+*/	
+		
+		//reference: https://www.w3schools.com/jsref/jsref_random.asp;
+		//last accessed: 20221108
+		//number between 0 and 4; integer only	
+	//	for (iCount=0; iCount<iCountMovementStepMax; iCount++) {
+		
+		if (iCountMovementStepDelay<iCountMovementStepDelayMax) {
+			iCountMovementStepDelay=iCountMovementStepDelay+1;
+			return;
+		}
+		else {
+			iCountMovementStepDelay=0;
+		}
+		
+		if (iCountMovementStep<iCountMovementStepMax) {
+			
+			//edited by Mike, 20221214; from 20221129
+			//random
+			//let iDirection = window.parseInt(Math.random() * 4);	
+			
+			//OK
+			//edited by Mike, 20230421
+			//let iDirection=parseInt(sRecordedSteps.substr(iCountMovementStep,1));		
+			iDirection=parseInt(sRecordedSteps.substr(iCountMovementStep,1));		
+						
+			switch (iDirection) {
+				case iKEY_W: //0
+/*
+					arrayKeyPressed[iKEY_W]=true;	
+					arrayKeyPressed[iKEY_K]=true;						
+*/					
+					mainImageTileStepX=0;
+					mainImageTileStepY=-2;
+					
+					//added by Mike, 20230421
+					//iMainImageTileStepAngleiMainImageTileStepAngle=0;					
+					break;	
+				case iKEY_S: //1
+/*
+					arrayKeyPressed[iKEY_S]=true;	
+					arrayKeyPressed[iKEY_K]=true;
+*/
+					mainImageTileStepX=0;
+					mainImageTileStepY=2;
+
+					//added by Mike, 20230421
+					//iMainImageTileStepAngle=0;					
+					break;	
+				case iKEY_A: //2
+/*
+					arrayKeyPressed[iKEY_A]=true;	
+					arrayKeyPressed[iKEY_K]=true;
+*/					
+					mainImageTileStepX=-2;
+					mainImageTileStepY=0;
+
+					//added by Mike, 20230421
+					//iMainImageTileStepAngle=0;					
+					break;	
+				case iKEY_D: //3
+/*
+					arrayKeyPressed[iKEY_D]=true;	
+					arrayKeyPressed[iKEY_K]=true;
+*/					
+					mainImageTileStepX=2;
+					mainImageTileStepY=0;
+
+					//added by Mike, 20230421
+					//iMainImageTileStepAngle=0;					
+					break;	
+
+				//DIAGONAL PART
+				case iKEY_Q: //4; TOP-LEFT
+					mainImageTileStepX=-2;
+					mainImageTileStepY=-2;
+					
+					//added by Mike, 20230421
+					iMainImageTileStepAngle=90+45;
+					
+					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
+						iCountMovementDiagonalStep++;
+						return;
+					}
+					else {
+						iCountMovementDiagonalStep=0;
+					}
+					break;	
+				case iKEY_E: //5; TOP-RIGHT
+					mainImageTileStepX=2;
+					mainImageTileStepY=-2;
+
+					//added by Mike, 20230421
+					//alert(iMainImageTileStepAngle);
+					//alert("iCountMovementDiagonalStep: "+iCountMovementDiagonalStep);
+					
+					//iMainImageTileStepAngle=(360-iMainImageTileStepAngle)+45;
+					iMainImageTileStepAngle=45;
+
+					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
+						iCountMovementDiagonalStep++;
+						return;
+					}
+					else {
+						iCountMovementDiagonalStep=0;
+					}
+					break;	
+				case iKEY_C: //6; BOTTOM-RIGHT
+					mainImageTileStepX=2;
+					mainImageTileStepY=2;
+					
+					//alert(iCountMovementDiagonalStep);
+
+					//added by Mike, 20230421
+					iMainImageTileStepAngle=270+45;
+					
+					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
+						iCountMovementDiagonalStep++;
+						return;
+					}
+					else {
+						iCountMovementDiagonalStep=0;
+					}
+					break;	
+				case iKEY_Z: //7; BOTTOM-LEFT
+					mainImageTileStepX=-2;
+					mainImageTileStepY=2;					
+
+					//added by Mike, 20230421
+					iMainImageTileStepAngle=180+45;
+
+					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
+						iCountMovementDiagonalStep++;
+						return;
+					}
+					else {
+						iCountMovementDiagonalStep=0;
+					}
+					break;						
+			}
+	
+/*	
+			//added by Mike, 20221214
+			arrayCountMovementStep[iCountMovementStep]=iDirection;
+*/				
+			
+			iCountMovementStep++;
+		}	
+		else {		
+			bIsInitAutoGeneratePuzzleFromEnd=false;
+
+	/*		//TO-DO: -add: in Database, with datetime stamp
+			//added by Mike, 20221214
+			var sRecordedSteps="";
+			
+			for (let iCount=0; iCount<iCountMovementStep; iCount++) {		
+				sRecordedSteps=sRecordedSteps.concat(arrayCountMovementStep[iCount]);
+			}
+			
+			
+			//OK
+			//example output: 3121220312133003112111302212133333303312003030030303133122112122121303033033311212002
+			alert(sRecordedSteps);
+	*/				
+		}	
+		
+	}
+	
+	
+
+	//added by Mike, 20230312	
+	//TO-DO: -update: variable container names
+	//TO-DO: -fix: SET button NOT focused on SAFARI
+	function init() {			
+		//TO-DO: -update: this; add in window, input boxes 
+		//note: parameters		
+		iDefaultAnimationImageX=0;//-32; //default x		
+ 		iDefaultAnimationImageY=0;//-32; //default y
+
+		//edited by Mike, 20230418
+		//iTotalAnimImageFrameCount=4;//2;
+		iTotalAnimImageFrameCount=2;
+
+		//edited by Mike, 20230322
+		iImageFrameWidth=64;// 32; //0;
+		iImageFrameHeight=64;// 32;		
+
+		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
+		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
+
+		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
+		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
+
+		var setTotalAnimImageFrameCountText = document.getElementById("textSetTotalAnimImageFrameCountId");
+		
+		var setAnimDelayText = document.getElementById("textSetAnimDelayId");
+				
+		//added by Mike, 20230315
+		var setPanelTable = document.getElementById("tableSetPanelId");
+		var mainImageTile = document.getElementById("mainImageTileImageId");
+				
+		setAnimImageFrameWidthText.value=iImageFrameWidth;
+		setAnimImageFrameHeightText.value=iImageFrameHeight;
+
+		setAnimImageFrameXText.value=iDefaultAnimationImageX;
+		setAnimImageFrameYText.value=iDefaultAnimationImageY;
+
+		//added by Mike, 20230314	
+	setTotalAnimImageFrameCountText.value=iTotalAnimImageFrameCount;
+		//added by Mike, 20230315
+setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
+				
+
+		//added by Mike, 20230315
+		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
+		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px";
+		setPanelTable.style.visibility = "visible";
+		
+		//removed by Mike, 20230321
+		//mainImageTile.style.visibility = "visible";
+	}
+	
+	function myUpdateFunction() {	
+		var mainImageTile = document.getElementById("mainImageTileImageId");
+		//var setAnimImageFrameXButton = document.getElementById("buttonSetAnimImageFrameXId");
+		var setPanelTable = document.getElementById("tableSetPanelId");
+
+		var setAnimImageFrameWidthText = document.getElementById("textSetAnimImageFrameWidthId");
+		var setAnimImageFrameHeightText = document.getElementById("textSetAnimImageFrameHeightId");
+	
+		//added by Mike, 20230315
+		var animDirectionSelectedIndex = document.getElementById("selectAnimDirectionId").selectedIndex;
+			
+		//added by Mike, 20230313
+		//reference: https://www.w3schools.com/tags/canvas_fillrect.asp; 
+		//last accessed: 2020911
+		var myCanvas = document.getElementById("myCanvasId");
+		var myCanvasContext = myCanvas.getContext("2d");
+		
+		//myCanvasContext.fillStyle = "#000000"; //black; //"#ababab"; //"rgb(128,89,27)"; //"#604122"; //"blue";	
+		
+		//myCanvasContext.fillStyle = "#c5c5c5"; //gray
+		myCanvasContext.fillStyle = "#ffffff"; //white background//stage
+		
+		myCanvasContext.fillRect(0, 0, iStageMaxWidth, iStageMaxHeight);	
+	
+//alert (iHorizontalOffset);
+
+		//added by Mike, 20221002; edited by Mike, 20221005
+		//myCanvas.style.top = (0)+"px"; //iVerticalOffset+
+		myCanvas.style.top = (iVerticalOffsetInnerScreen+0)+"px"; //iVerticalOffset+
+
+		//added by Mike, 20221012
+		iHorizontalOffset=myCanvas.getBoundingClientRect().x;
+		
+		//added by Mike, 20230321
+		mainImageTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
+
+
+/*
+		// Clip a rectangular area
+		mainImageTileCtx.rect(0, 0, iImageFrameWidth, iImageFrameHeight);
+*/
+		
+			//alert("dito");
+
+/*		//removed by Mike, 20230312
+		//TO-DO: -update: this; add in window, input boxes 
+		//note: parameters		
+		iDefaultAnimationImageX=-32;//0; //default x		
+ 		iDefaultAnimationImageY=-32; //default y
+		iTotalAnimImageFrameCount=2;
+		iImageFrameWidth=0;
+		iImageFrameHeight=32;
+*/
+			
+		//notes: delay before CHANGE in frame
+		//adds max (12) frames before frame update
+		if (iDelayAnimationCountMovementStep<iDelayAnimationCountMovementStepMax) {
+			iDelayAnimationCountMovementStep++;
+		}
+		else {
+			iDelayAnimationCountMovementStep=0;
+						
+			//updated: IF using > 2 animating image frames
+/*
+			if (iAnimImageFrameCount<iTotalAnimImageFrameCount) {				
+				//alert("iAnimImageFrameCount: "+iAnimImageFrameCount);
+	
+				if (iFacingDirection==iFACING_DOWN) {
+					//edited by Mike, 20221117
+					//mainImageTile.style.objectPosition="0px 0px";
+					
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="0px -32px";
+					}
+					else {
+						mainImageTile.style.objectPosition="0px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_RIGHT) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="-64px -32px";
+					}
+					else {			
+						mainImageTile.style.objectPosition="-64px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_LEFT) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="-128px -32px";
+					}
+					else {
+						mainImageTile.style.objectPosition="-128px 0px";
+					}
+				}	
+				else if (iFacingDirection==iFACING_UP) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="-32px -32px";
+					}
+					else {
+						mainImageTile.style.objectPosition="-192px 0px";
+					}
+				}		
+				
+				iAnimImageFrameCount++;	
+			}
+			else {
+				if (iFacingDirection==iFACING_DOWN) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="0px -64px";
+					}
+					else {			
+						mainImageTile.style.objectPosition="-32px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_RIGHT) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="-64px -64px";
+					}
+					else {			
+						mainImageTile.style.objectPosition="-96px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_LEFT) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="-128px -64px";
+					}
+					else {			
+						mainImageTile.style.objectPosition="-160px 0px";
+					}
+				}
+				else if (iFacingDirection==iFACING_UP) {
+					if (bIsWalkingAction) {
+						mainImageTile.style.objectPosition="-32px -64px";
+					}
+					else {			
+						mainImageTile.style.objectPosition="-224px 0px";
+					}
+				}		
+		
+				iAnimImageFrameCount=0;
+			}			
+*/			
+			//if (iFacingDirection==iFACING_DOWN) {
+			//if (bIsWalkingAction) {
+			//x, y
+			//mainImageTile.style.objectPosition="0px -32px";
+			//notes: negative to move frame window
+			//edited by Mike, 20230312
+//			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-iAnimImageFrameCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iAnimImageFrameCount*iImageFrameHeight)+"px";
+/*
+			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
+										   (iDefaultAnimationImageY+(iAnimImageFrameCount*(iImageFrameHeight+(iDefaultAnimationImageY-iImageFrameHeight))))+"px";
+*/
+/*
+			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iDefaultAnimationImageX))+"px "+
+										   (iDefaultAnimationImageY+(iAnimImageFrameCount*iDefaultAnimationImageY))+"px";
+*/		
+
+			//TO-DO: -add: in settings, horizontal or vertical animation frame movement in INPUT spritesheet
+/*
+			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+
+										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
+*/
+
+			if (animDirectionSelectedIndex==AnimImageDirection_VERTICAL) {
+				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
+										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";	
+			}
+			//AnimImageDirection_HORIZONTAL
+			else {
+				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
+			}
+			
+			if (iAnimImageFrameCount<(iTotalAnimImageFrameCount-1)) {	
+				iAnimImageFrameCount++;
+			}
+			else {
+				iAnimImageFrameCount=0;
+			}			
+		}
+		
+/*	//removed by Mike, 20230313		
+		//TO-DO: -update: this
+		iHorizontalOffset=0;
+		iVerticalOffsetInnerScreen=0;
+		imainImageTileX=0;
+		imainImageTileY=0;
+*/
+		
+		//edited by Mike, 20230313	
+/*
+		mainImageTile.style.left = (iHorizontalOffset+imainImageTileX)+"px";	
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+imainImageTileY)+"px";	
+*/
+		//added by Mike, 20230313
+		//let imainImageTileX = mainImageTile.getBoundingClientRect().x;
+	
+	//alert(iHorizontalOffset);
+	
+//		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2+imainImageTileX)+"px";	
+//		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/3+imainImageTileY)+"px";	
+
+//alert(iVerticalOffsetInnerScreen);
+//alert(iStageMaxHeight);
+//alert(setAnimImageFrameHeightText.value);
+
+/* //edited by Mike, 20230410
+		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+"px";
+		
+		//alert(iStageMaxHeight);
+		
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+"px";	
+*/
+/*
+		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+mainImageTilePosX+"px";		
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+mainImageTilePosY+"px";	
+*/
+		mainImageTile.style.left = (iHorizontalOffset)+mainImageTilePosX+"px";		
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY+"px";	
+
+//		mainImageTilePosX++;
+//		mainImageTilePosX--;
+//		mainImageTilePosY++;
+				
+		//edited by Mike, 20230418
+		autoIdentifyNextDirectionAI();
+
+		//edited by Mike, 20230421
+/*
+		mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
+		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
+*/
+		if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
+/*		
+			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(45);
+			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(45);
+*/
+
+/*
+			var mainImageTileStepYDirection = 1; //mainImageTileStepY;
+			var mainImageTileStepXDirection = 1; //mainImageTileStepX;
+			if (mainImageTileStepY<0) {
+				mainImageTileStepYDirection*=-1;
+			}
+			if (mainImageTileStepX<0) {
+				mainImageTileStepXDirection*=-1;
+			}
+*/
+			
+/*
+			alert("iMainImageTileStepAngle: "+iMainImageTileStepAngle);
+			alert("mainImageTilePosY: "+mainImageTilePosY);
+*/			
+
+			//alert(iCountMovementDiagonalStep);
+			
+			//edited by Mike, 20230421
+			//convert degrees to radians; input to Math.sin, Math.cos
+			//reference: https://www.w3schools.com/python/ref_math_sin.asp;
+			//last accessed: 20230421
+			//edited by Mike, 20230422			
+			//incorrect function
+			//var fMainImageTileStepAngleRad=Math.radians(iMainImageTileStepAngle);
+			//correct equation
+			var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
+			//notes: error due to not the expected output; 
+			return;
+			
+			//TO-DO: -update: this; corners; curved; 
+			
+			/*			
+			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(iMainImageTileStepAngle);
+			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(iMainImageTileStepAngle);
+*/
+
+			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
+			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
+
+			
+/*
+			alert(mainImageTilePosY);
+*/			
+			iCountMovementDiagonalStep++;
+		}
+		else {
+			mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
+			mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
+		}
+
+		
+		//TO-DO: -add: function; AI; Artificial Intelligence
+		//combination of forward, diagonal movements
+				
+		//STAGE; MAX
+		if (mainImageTilePosX+iImageFrameWidth>iStageMaxWidth) {
+			mainImageTilePosX=iStageMaxWidth-iImageFrameWidth;
+		}
+		else if (mainImageTilePosX<0) {
+			mainImageTilePosX=0;
+		}
+
+		if (mainImageTilePosY+iImageFrameHeight>iStageMaxHeight) {
+			mainImageTilePosY=iStageMaxHeight-iImageFrameHeight;
+		}
+		else if (mainImageTilePosY<0) {
+			mainImageTilePosY=0;
+		}
+
+		
+		//added by Mike, 20230321
+		mainImageTile.style.visibility = "visible";
+
+/*		
+		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
+		setAnimImageFrameXButton.style.top = (iVerticalOffsetInnerScreen)+"px"; //+iStageMaxHeight
+*/		
+
+		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
+		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px"; //+iStageMaxHeight
+	}
+	
+	
+	
+	function onLoad() {
+/*	
+		while (bIsInitAutoGeneratePuzzleFromEnd) {
+			autoGeneratePuzzleFromEndForStorage();
+		}
+*/		
+		//TO-DO: -update: this; add bIsNotEnd
+/*		
+		while (true) {
+			iFacingDirection=iFACING_DOWN;		
+			miniGameActionUpdate();
+		}
+*/		
+
+
+		init();
+
+		iFacingDirection=iFACING_DOWN;
+		
+		fFramesPerSecond=16.66; //100.00; //16.66;				
+		clearInterval(iCurrentIntervalId);
+		iCurrentIntervalId=setInterval(myUpdateFunction, fFramesPerSecond);
+	}
+	
+  </script>  
+  <body id="myBodyId" onload="onLoad();">
+  
+	<canvas id="myCanvasId" class="myCanvas">
+	</canvas>
+	  
+<!-- note: using absolute positions; table technique NO EFFECT
+	<table>
+	<tr>
+		<td>
+		</td>
+		<td>
+		</td>
+	</tr>
+	</table>
+-->
+
+		<!--HALLO!-->
+<!--
+		<img id="mainImageTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
+-->		
+		<img id="mainImageTileImageId" class="ImageTileFrame1" src="assets/images/inputImage.png">	
+
+<!--	
+		iDefaultAnimationImageX=-32;//0; //default x		
+ 		iDefaultAnimationImageY=-32; //default y
+		iTotalAnimImageFrameCount=2;
+		iImageFrameWidth=0;
+		iImageFrameHeight=32;
+-->
+
+	<table class="TableSetPanel" id="tableSetPanelId">
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame W:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameWidthId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameWidthId" onclick="setAnimImageFrameWidth()">SET</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame H:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameHeightId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameHeightId" onclick="setAnimImageFrameHeight()">SET</button>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<br/>
+		</td>
+	</tr>
+
+
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame X:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameXId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameXId" onclick="setAnimImageFrameX()">SET</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label class="LabelSet">Set Image Frame Y:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetAnimImageFrameYId">
+			<button class="ButtonSet" id="buttonSetAnimImageFrameYId" onclick="setAnimImageFrameY()">SET</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br/>
+		</td>
+	</tr>
+	
+	
+	<tr>
+		<td>
+			<label class="LabelSet">Set TOTAL Frame Count:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetTotalAnimImageFrameCountId">
+			<button class="ButtonSet" id="buttonSetTotalAnimImageFrameCountId" onclick="setTotalAnimImageFrameCount()">SET</button>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label class="LabelSet">Set DELAY Frame Count:</label>
+			<br/>
+			<input type="number" class="TextInputSet" id="textSetAnimDelayId">
+			<button class="ButtonSet" id="buttonSetAnimDelayId" onclick="setAnimDelay()">SET</button>
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<br/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<label class="LabelSet">Animation Frame Direction:</label>
+			<br/>
+			<select id="selectAnimDirectionId" class="SelectAnimDirection">
+  				<option value="VERTICAL">VERTICAL</option>
+  				<option value="HORIZONTAL">HORIZONTAL</option>
+			</select>
+		</td>
+	</tr>
+	
+	</table>
+
+  </body>
+</html>
