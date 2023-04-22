@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230421; from 20230419
+' @date updated: 20230422; from 20230421
 ' @website: www.usbong.ph
 '
 '
@@ -29,14 +29,11 @@
 '
 ' 3) http://localhost/usbong_2DAnimationTool/html_application/usbong2DAnimationTool.html;
 ' last accessed: 20230311
-
 '*/
-
 //added by Mike, 20230313
 //TO-DO: -add: adjustable "STAGE" SIZE textbox
 //TO-DO: -add: timeline?; remembers: DIRECTOR6, FLASH tool
 //TO-DO: -note: location of image sprite file in assets folder, editable using GIMP tool
-
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -114,7 +111,6 @@
 			
 			visibility: hidden;			
 		}
-
 		.ImageTextInputSet32x32TileFrame2 {
 			position: absolute;
   			clip: rect(0px,32px,32px,0px);
@@ -452,7 +448,8 @@
 					
 					//added by Mike, 20230421
 					iMainImageTileStepAngle=90+45;
-					
+
+/*					//removed by Mike, 20230422					
 					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
 						iCountMovementDiagonalStep++;
 						return;
@@ -460,6 +457,7 @@
 					else {
 						iCountMovementDiagonalStep=0;
 					}
+*/					
 					break;	
 				case iKEY_E: //5; TOP-RIGHT
 					mainImageTileStepX=2;
@@ -472,6 +470,7 @@
 					//iMainImageTileStepAngle=(360-iMainImageTileStepAngle)+45;
 					iMainImageTileStepAngle=45;
 
+/*					//removed by Mike, 20230422
 					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
 						iCountMovementDiagonalStep++;
 						return;
@@ -479,6 +478,7 @@
 					else {
 						iCountMovementDiagonalStep=0;
 					}
+*/					
 					break;	
 				case iKEY_C: //6; BOTTOM-RIGHT
 					mainImageTileStepX=2;
@@ -488,7 +488,8 @@
 
 					//added by Mike, 20230421
 					iMainImageTileStepAngle=270+45;
-					
+
+/*					//removed by Mike, 20230422
 					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
 						iCountMovementDiagonalStep++;
 						return;
@@ -496,6 +497,7 @@
 					else {
 						iCountMovementDiagonalStep=0;
 					}
+*/					
 					break;	
 				case iKEY_Z: //7; BOTTOM-LEFT
 					mainImageTileStepX=-2;
@@ -504,6 +506,7 @@
 					//added by Mike, 20230421
 					iMainImageTileStepAngle=180+45;
 
+/*					//removed by Mike, 20230422
 					if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
 						iCountMovementDiagonalStep++;
 						return;
@@ -511,6 +514,7 @@
 					else {
 						iCountMovementDiagonalStep=0;
 					}
+*/					
 					break;						
 			}
 	
@@ -836,11 +840,9 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 /*
 			var mainImageTileStepYDirection = 1; //mainImageTileStepY;
 			var mainImageTileStepXDirection = 1; //mainImageTileStepX;
-
 			if (mainImageTileStepY<0) {
 				mainImageTileStepYDirection*=-1;
 			}
-
 			if (mainImageTileStepX<0) {
 				mainImageTileStepXDirection*=-1;
 			}
@@ -857,9 +859,16 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 			//convert degrees to radians; input to Math.sin, Math.cos
 			//reference: https://www.w3schools.com/python/ref_math_sin.asp;
 			//last accessed: 20230421
-
-			var fMainImageTileStepAngleRad=Math.radians(iMainImageTileStepAngle);
-
+			//edited by Mike, 20230422			
+			//incorrect function
+			//var fMainImageTileStepAngleRad=Math.radians(iMainImageTileStepAngle);
+			//correct equation
+			var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
+			//notes: error due to not the expected output; 
+			return;
+			
+			//TO-DO: -update: this; corners; curved; 
+			
 			/*			
 			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(iMainImageTileStepAngle);
 			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(iMainImageTileStepAngle);
