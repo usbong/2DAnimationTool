@@ -601,6 +601,13 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 		
 		//removed by Mike, 20230321
 		//mainImageTile.style.visibility = "visible";
+		
+		//added by Mike, 20230423
+		mainImageTilePosX=iStageMaxWidth/2-iImageFrameWidth/2;
+		mainImageTilePosY=iStageMaxHeight/2-iImageFrameHeight/2;
+		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
+
 	}
 	
 	function myUpdateFunction() {	
@@ -827,15 +834,20 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 //		mainImageTilePosX--;
 //		mainImageTilePosY++;
 				
-		//edited by Mike, 20230418
-		autoIdentifyNextDirectionAI();
+		//edited by Mike, 20230423; from 20230418
+		//autoIdentifyNextDirectionAI();
+		//autoIdentifyNextDirectionAIPart2Mouse();
 
 		//edited by Mike, 20230421
 /*
 		mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
 		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
 */
+
+/* //removed by Mike, 20230423
 		if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
+*/
+
 /*		
 			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(45);
 			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(45);
@@ -857,6 +869,8 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 			alert("mainImageTilePosY: "+mainImageTilePosY);
 */			
 
+/* //removed by Mike, 20230423
+
 			//alert(iCountMovementDiagonalStep);
 			
 			//edited by Mike, 20230421
@@ -873,25 +887,30 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 			
 			//TO-DO: -update: this; corners; curved; 
 			
-			/*			
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(iMainImageTileStepAngle);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(iMainImageTileStepAngle);
-*/
-
 			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
 			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
-
+*/
 			
 /*
 			alert(mainImageTilePosY);
 */			
+/* //removed by Mike, 20230423
+
 			iCountMovementDiagonalStep++;
 		}
 		else {
+		
 			mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
 			mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
 		}
+*/
 
+/*
+		//mainImageTileStepY=2;
+
+		mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
+		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
+*/
 		
 		//TO-DO: -add: function; AI; Artificial Intelligence
 		//combination of forward, diagonal movements
@@ -944,9 +963,35 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 
 					//note: screenY includes BROWSER address bar, et cetera;
 					var iYPos = event.pageY; //screenY;
-	
+
+/*					//edited by Mike, 20230423
 					alert("iXPos: "+iXPos);
-					alert("iYPos: "+iYPos);							
+					alert("iYPos: "+iYPos);		
+*/
+
+					var mainImageTile = document.getElementById("mainImageTileImageId");
+					iMainImageTileStepAngle+=1;
+					
+					//TO-DO: -update: this; does not yet rotate at center
+					//mainImageTilePosX-=1;
+					//mainImageTilePosY+=1;
+					
+					//mainImageTile.style.transformOrigin = "left top";
+					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
+/*
+					mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+					mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
+*/					
+
+/*	TO-DO: -add: input angle based on mouse position
+					
+					iMainImageTileStepAngle
+
+					var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
+
+					mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
+					mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);					
+*/
 					
 					//note: margin before stage width
 					//alert("iStageMaxWidth: "+iStageMaxWidth);
