@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230423; from 20230422
+' @date updated: 20230424; from 20230423
 ' @website: www.usbong.ph
 '
 '
@@ -41,12 +41,12 @@
 <!-- TO-DO: -update: this -->
 <!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
 -->
-  	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
-
 
 <!--
+  	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
   	<base href="http://store.usbong.ph/" target="_blank">
 -->
+
   </head>
 
   <title>
@@ -118,7 +118,8 @@
 */
 		.ImageTileFrame1 {
 			position: absolute;
-  			clip: rect(0px,32px,32px,0px);
+  			
+  			/*clip: rect(0px,32px,32px,0px);*/
 			
 			visibility: hidden;						
 		}
@@ -644,13 +645,36 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 
 		//added by Mike, 20221012
 		iHorizontalOffset=myCanvas.getBoundingClientRect().x;
-		
-		//edited by Mike, 20230423; from 20230321
-		//mainImageTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
 
-/*	//TO-DO: -reverify: cause WHY angle rotation appears to become excess the input
+ //removed by Mike, 20230424
+		//edited by Mike, 20230423; from 20230321
+		mainImageTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
+
+
+//reference: https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin; last accessed: 20230424
+//note: transform rotate uses whole unclipped image size; 256x256px
+//25%/2 = 12.5%
+mainImageTile.style.transformOrigin = "12.5% 12.5%";
+
+iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
+				
+					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
+					
+					
+
+
+
+
+
+
+
+
+
+
+/*
+//	//TO-DO: -reverify: cause WHY angle rotation appears to become excess the input
 		if (iMainImageTileStepAngle%100==0) {		
-*/
+////
 			iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 								
 			//alert(iMainImageTileStepAngle);
@@ -659,15 +683,17 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 			myCanvasContext.translate(iImageFrameWidth/2, iImageFrameHeight/2);
 			myCanvasContext.rotate(iMainImageTileStepAngle*Math.PI/180.0);
 			myCanvasContext.translate(-iImageFrameWidth/2, -iImageFrameHeight/2);
-/*
-		}	
+
+////		}	
 		iMainImageTileStepAngle++;
 */
 		
+/*		
 		//added by Mike, 20230423
 //		myCanvasContext.drawImage(mainImageTile,0,0,iImageFrameWidth,iImageFrameHeight, 0+(iHorizontalOffset+mainImageTilePosX+iImageFrameWidth/2), 0+(iVerticalOffsetInnerScreen+mainImageTilePosY+iImageFrameHeight/2),iImageFrameWidth,iImageFrameHeight);
 //		myCanvasContext.drawImage(mainImageTile,0,0,iImageFrameWidth,iImageFrameHeight, 0, 0,iImageFrameWidth,iImageFrameHeight);
 		myCanvasContext.drawImage(mainImageTile,0,0,iImageFrameWidth,iImageFrameHeight, 0, 0,iImageFrameWidth,iImageFrameHeight);
+*/	
 		
 /*
 		// Clip a rectangular area
@@ -954,8 +980,8 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 
 		
 		//edited by Mike, 20230423; from 20230321;
-		//mainImageTile.style.visibility = "visible";
-		mainImageTile.style.visibility = "hidden";
+		mainImageTile.style.visibility = "visible";
+		//mainImageTile.style.visibility = "hidden";
 
 /*		
 		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
@@ -1004,7 +1030,8 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 					iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 										
 					//alert(iMainImageTileStepAngle);
-										
+					
+/* //removed by Mike, 20230424										
 					var myCanvas = document.getElementById("myCanvasId");
 					var myCanvasContext = myCanvas.getContext("2d");
 					
@@ -1014,6 +1041,7 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 					myCanvasContext.translate(iImageFrameWidth/2, iImageFrameHeight/2);
 					myCanvasContext.rotate(iMainImageTileStepAngle*Math.PI/180.0);
 					myCanvasContext.translate(-iImageFrameWidth/2, -iImageFrameHeight/2);
+*/	
 	
 					//myCanvasContext.setTransform(1, 0, 0, 1, 0, 0);
 		
@@ -1029,8 +1057,24 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 //					mainImageTile.style.transform = "translate("+ (iImageFrameWidth/2) +","+(iImageFrameHeight/2)+")";
 
 /*
-					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
+					mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX-iImageFrameWidth/2)+"px";	
+					mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY-iImageFrameHeight/2)+"px";
+*/
+/*
+					mainImageTilePosX+=iImageFrameWidth/2;
+					mainImageTilePosY+=iImageFrameHeight/2
+*/
+/*
+					mainImageTilePosX-=(iImageFrameWidth*4)/2/2;
+					mainImageTilePosY-=(iImageFrameHeight*4)/2/2;
 */					
+					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
+
+/*
+					mainImageTilePosX+=(iImageFrameWidth*4)/2/2;
+					mainImageTilePosY+=(iImageFrameHeight*4)/2/2;
+*/
+					
 //					mainImageTile.style.transform = "translate("+ (iHorizontalOffset+mainImageTilePosX-iImageFrameWidth/2) +","+(iVerticalOffsetInnerScreen+mainImageTilePosY-iImageFrameHeight/2))";
 //					mainImageTile.style.transform = "translate("+ (-iImageFrameWidth/2) +","+(-iImageFrameHeight/2)+")";
 
@@ -1126,7 +1170,23 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 <!--
 		<img id="mainImageTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
 -->		
+<!-- edited by Mike, 20230424
 		<img id="mainImageTileImageId" class="ImageTileFrame1" src="assets/images/inputImage.png">	
+-->
+
+<!-- noted by Mike, 20230424; 
+
+reference: https://stackoverflow.com/questions/5713295/specify-a-root-path-of-your-html-directory-for-script-links/41011179#41011179; last accessed: 20230424;
+answer by: MistyDawn, 20161207T0655;
+edited by: Huy Nguyen, 20170124T0455
+
+/ means the root of the current drive;
+./ means the current directory;
+../ means the parent of the current directory.
+
+-->
+
+		<img id="mainImageTileImageId" class="ImageTileFrame1" src="../assets/images/inputImage.png">	
 
 <!--	
 		iDefaultAnimationImageX=-32;//0; //default x		
