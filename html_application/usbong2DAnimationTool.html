@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230322; from 20230321
+' @date updated: 20230424; from 20230322
 ' @website: www.usbong.ph
 '
 '
@@ -41,10 +41,9 @@
 <!-- TO-DO: -update: this -->
 <!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
 -->
+
+<!-- //removed by Mike, 20230424
   	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
-
-
-<!--
   	<base href="http://store.usbong.ph/" target="_blank">
 -->
   </head>
@@ -619,8 +618,23 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 <!--
 		<img id="mainImageTileImageId" class="Image32x32TileFrame1" src="assets/images/human.png">	
 -->		
+<!-- edited by Mike, 20230424
 		<img id="mainImageTileImageId" class="ImageTileFrame1" src="assets/images/inputImage.png">	
+-->
 
+<!-- noted by Mike, 20230424; 
+
+reference: https://stackoverflow.com/questions/5713295/specify-a-root-path-of-your-html-directory-for-script-links/41011179#41011179; last accessed: 20230424;
+answer by: MistyDawn, 20161207T0655;
+edited by: Huy Nguyen, 20170124T0455
+
+/ means the root of the current drive;
+./ means the current directory;
+../ means the parent of the current directory.
+
+-->
+
+		<img id="mainImageTileImageId" class="ImageTileFrame1" src="../assets/images/inputImage.png">	
 <!--	
 		iDefaultAnimationImageX=-32;//0; //default x		
  		iDefaultAnimationImageY=-32; //default y
