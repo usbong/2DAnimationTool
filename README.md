@@ -30,6 +30,10 @@ https://github.com/usbong/2DAnimationTool.git
 
 2) [Lessons-learned: GAME MAKER STUDIO](https://github.com/usbong/newsletters/blob/main/notes/LessonsLearned/GameMakerStudio/GameMakerStudioV20230216.md)
 
+## Additional Example
+
+<img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationToolMotionTweenRotationClippedImageOKV20230424T1500.gif" width="30%">
+
 ## Additional Useful Tools
 
 1) https://www.gimp.org/; last accessed: 20230322
