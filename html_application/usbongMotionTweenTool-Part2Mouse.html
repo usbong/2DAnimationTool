@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230424; from 20230423
+' @date updated: 20230425; from 20230424
 ' @website: www.usbong.ph
 '
 '
@@ -656,61 +656,14 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 //25%/2 = 12.5%
 mainImageTile.style.transformOrigin = "12.5% 12.5%";
 
-iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
+//clockwise
+//iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
+//counter-clockwise	
+iMainImageTileStepAngle=(iMainImageTileStepAngle-1)%360;
+	
 				
 					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
 					
-					
-
-
-
-
-
-
-
-
-
-
-/*
-//	//TO-DO: -reverify: cause WHY angle rotation appears to become excess the input
-		if (iMainImageTileStepAngle%100==0) {		
-////
-			iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
-								
-			//alert(iMainImageTileStepAngle);
-								
-			
-			myCanvasContext.translate(iImageFrameWidth/2, iImageFrameHeight/2);
-			myCanvasContext.rotate(iMainImageTileStepAngle*Math.PI/180.0);
-			myCanvasContext.translate(-iImageFrameWidth/2, -iImageFrameHeight/2);
-
-////		}	
-		iMainImageTileStepAngle++;
-*/
-		
-/*		
-		//added by Mike, 20230423
-//		myCanvasContext.drawImage(mainImageTile,0,0,iImageFrameWidth,iImageFrameHeight, 0+(iHorizontalOffset+mainImageTilePosX+iImageFrameWidth/2), 0+(iVerticalOffsetInnerScreen+mainImageTilePosY+iImageFrameHeight/2),iImageFrameWidth,iImageFrameHeight);
-//		myCanvasContext.drawImage(mainImageTile,0,0,iImageFrameWidth,iImageFrameHeight, 0, 0,iImageFrameWidth,iImageFrameHeight);
-		myCanvasContext.drawImage(mainImageTile,0,0,iImageFrameWidth,iImageFrameHeight, 0, 0,iImageFrameWidth,iImageFrameHeight);
-*/	
-		
-/*
-		// Clip a rectangular area
-		mainImageTileCtx.rect(0, 0, iImageFrameWidth, iImageFrameHeight);
-*/
-		
-			//alert("dito");
-
-/*		//removed by Mike, 20230312
-		//TO-DO: -update: this; add in window, input boxes 
-		//note: parameters		
-		iDefaultAnimationImageX=-32;//0; //default x		
- 		iDefaultAnimationImageY=-32; //default y
-		iTotalAnimImageFrameCount=2;
-		iImageFrameWidth=0;
-		iImageFrameHeight=32;
-*/
 			
 		//notes: delay before CHANGE in frame
 		//adds max (12) frames before frame update
@@ -800,27 +753,7 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 				iAnimImageFrameCount=0;
 			}			
 */			
-			//if (iFacingDirection==iFACING_DOWN) {
-			//if (bIsWalkingAction) {
-			//x, y
-			//mainImageTile.style.objectPosition="0px -32px";
-			//notes: negative to move frame window
-			//edited by Mike, 20230312
-//			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-iAnimImageFrameCount*iImageFrameWidth)+"px "+(iDefaultAnimationImageY-iAnimImageFrameCount*iImageFrameHeight)+"px";
-/*
-			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*(iImageFrameWidth+(iDefaultAnimationImageX-iImageFrameWidth))))+"px "+
-										   (iDefaultAnimationImageY+(iAnimImageFrameCount*(iImageFrameHeight+(iDefaultAnimationImageY-iImageFrameHeight))))+"px";
-*/
-/*
-			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iDefaultAnimationImageX))+"px "+
-										   (iDefaultAnimationImageY+(iAnimImageFrameCount*iDefaultAnimationImageY))+"px";
-*/		
 
-			//TO-DO: -add: in settings, horizontal or vertical animation frame movement in INPUT spritesheet
-/*
-			mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+
-										   (iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
-*/
 
 			if (animDirectionSelectedIndex==AnimImageDirection_VERTICAL) {
 				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
@@ -838,45 +771,11 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 				iAnimImageFrameCount=0;
 			}			
 		}
-		
-/*	//removed by Mike, 20230313		
-		//TO-DO: -update: this
-		iHorizontalOffset=0;
-		iVerticalOffsetInnerScreen=0;
-		imainImageTileX=0;
-		imainImageTileY=0;
-*/
-		
-		//edited by Mike, 20230313	
-/*
-		mainImageTile.style.left = (iHorizontalOffset+imainImageTileX)+"px";	
-		mainImageTile.style.top = (iVerticalOffsetInnerScreen+imainImageTileY)+"px";	
-*/
-		//added by Mike, 20230313
-		//let imainImageTileX = mainImageTile.getBoundingClientRect().x;
-	
-	//alert(iHorizontalOffset);
-	
-//		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2+imainImageTileX)+"px";	
-//		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/3+imainImageTileY)+"px";	
 
-//alert(iVerticalOffsetInnerScreen);
-//alert(iStageMaxHeight);
-//alert(setAnimImageFrameHeightText.value);
-
-/* //edited by Mike, 20230410
-		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+"px";
-		
-		//alert(iStageMaxHeight);
-		
-		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+"px";	
-*/
-/*
-		mainImageTile.style.left = (iHorizontalOffset+iStageMaxWidth/2-setAnimImageFrameWidthText.value/2)+mainImageTilePosX+"px";		
-		mainImageTile.style.top = (iVerticalOffsetInnerScreen+iStageMaxHeight/2-setAnimImageFrameHeightText.value/2)+mainImageTilePosY+"px";	
-*/
+/*	//removed by Mike, 20230425
 		mainImageTile.style.left = (iHorizontalOffset)+mainImageTilePosX+"px";		
 		mainImageTile.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY+"px";	
+*/		
 
 //		mainImageTilePosX++;
 //		mainImageTilePosX--;
@@ -892,73 +791,6 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
 */
 
-/* //removed by Mike, 20230423
-		if (iCountMovementDiagonalStep<iCountMovementDiagonalStepMax) {
-*/
-
-/*		
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(45);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(45);
-*/
-
-/*
-			var mainImageTileStepYDirection = 1; //mainImageTileStepY;
-			var mainImageTileStepXDirection = 1; //mainImageTileStepX;
-			if (mainImageTileStepY<0) {
-				mainImageTileStepYDirection*=-1;
-			}
-			if (mainImageTileStepX<0) {
-				mainImageTileStepXDirection*=-1;
-			}
-*/
-			
-/*
-			alert("iMainImageTileStepAngle: "+iMainImageTileStepAngle);
-			alert("mainImageTilePosY: "+mainImageTilePosY);
-*/			
-
-/* //removed by Mike, 20230423
-
-			//alert(iCountMovementDiagonalStep);
-			
-			//edited by Mike, 20230421
-			//convert degrees to radians; input to Math.sin, Math.cos
-			//reference: https://www.w3schools.com/python/ref_math_sin.asp;
-			//last accessed: 20230421
-			//edited by Mike, 20230422			
-			//incorrect function
-			//var fMainImageTileStepAngleRad=Math.radians(iMainImageTileStepAngle);
-			//correct equation
-			var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
-			//notes: error due to not the expected output; 
-			return;
-			
-			//TO-DO: -update: this; corners; curved; 
-			
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
-*/
-			
-/*
-			alert(mainImageTilePosY);
-*/			
-/* //removed by Mike, 20230423
-
-			iCountMovementDiagonalStep++;
-		}
-		else {
-		
-			mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
-			mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
-		}
-*/
-
-/*
-		//mainImageTileStepY=2;
-
-		mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
-		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
-*/
 		
 		//TO-DO: -add: function; AI; Artificial Intelligence
 		//combination of forward, diagonal movements
@@ -1023,83 +855,52 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 /*
 					iMainImageTileStepAngle+=1;
 */
-					//reference: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/rotate;
-					//last accessed: 20230423
-					//"The rotation center point is always the canvas origin. To change the center point, you will need to move the canvas by using the translate() method."
-					
+
+/*
 					iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 										
 					//alert(iMainImageTileStepAngle);
-					
-/* //removed by Mike, 20230424										
-					var myCanvas = document.getElementById("myCanvasId");
-					var myCanvasContext = myCanvas.getContext("2d");
-					
-					//myCanvasContext.drawImage(mainImageTile,0,0);
-					//myCanvasContext.clear(0,0,myCanvas.width,myCanvas.height);
-					
-					myCanvasContext.translate(iImageFrameWidth/2, iImageFrameHeight/2);
-					myCanvasContext.rotate(iMainImageTileStepAngle*Math.PI/180.0);
-					myCanvasContext.translate(-iImageFrameWidth/2, -iImageFrameHeight/2);
-*/	
 	
-					//myCanvasContext.setTransform(1, 0, 0, 1, 0, 0);
-		
-					//TO-DO: -update: this; does not yet rotate at center
-					//mainImageTilePosX-=1;
-					//mainImageTilePosY+=1;
-/*
-					mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX+iImageFrameWidth/2)+"px";	
-					mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY+iImageFrameHeight/2)+"px";
-*/					
-					//mainImageTile.style.transformOrigin = "left top";
-//					mainImageTile.style.transform = "translate("+ (iHorizontalOffset+mainImageTilePosX+iImageFrameWidth/2) +","+(iVerticalOffsetInnerScreen+mainImageTilePosY+iImageFrameHeight/2))";
-//					mainImageTile.style.transform = "translate("+ (iImageFrameWidth/2) +","+(iImageFrameHeight/2)+")";
-
-/*
-					mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX-iImageFrameWidth/2)+"px";	
-					mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY-iImageFrameHeight/2)+"px";
-*/
-/*
-					mainImageTilePosX+=iImageFrameWidth/2;
-					mainImageTilePosY+=iImageFrameHeight/2
-*/
-/*
-					mainImageTilePosX-=(iImageFrameWidth*4)/2/2;
-					mainImageTilePosY-=(iImageFrameHeight*4)/2/2;
-*/					
 					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
-
-/*
-					mainImageTilePosX+=(iImageFrameWidth*4)/2/2;
-					mainImageTilePosY+=(iImageFrameHeight*4)/2/2;
-*/
+*/				
+					//note: start 0 @clock 12 o'clock; clock-wise
+					//adds: image's top
+					//edited by Mike, 20230425
+					//counter-clockwise; 
+					//note: equation; output, correct; quadrants;	
+					iMainImageTileStepAngleTemp=((-1*iMainImageTileStepAngle+90)%(360+90))%360;
 					
-//					mainImageTile.style.transform = "translate("+ (iHorizontalOffset+mainImageTilePosX-iImageFrameWidth/2) +","+(iVerticalOffsetInnerScreen+mainImageTilePosY-iImageFrameHeight/2))";
-//					mainImageTile.style.transform = "translate("+ (-iImageFrameWidth/2) +","+(-iImageFrameHeight/2)+")";
+					//alert(iMainImageTileStepAngleTemp);					
+									
+					var fMainImageTileStepAngleRad=iMainImageTileStepAngleTemp*Math.PI/180.0;			
+							
+					//alert(fMainImageTileStepAngleRad);
 
-/*
-					mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX-iImageFrameWidth/2)+"px";	
-					mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY-iImageFrameHeight/2)+"px";
-*/
-
-/*	TO-DO: -add: input angle based on mouse position
+mainImageTileStepX=2;
+mainImageTileStepY=2;
+										
+					//alert("mainImageTileStepX: "+mainImageTileStepX);
 					
-					iMainImageTileStepAngle
+					//alert("mainImageTilePosY Part1: "+mainImageTilePosY);
 
-					var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
+//edited by Mike, 20230425
+//TO-DO: -update: this; incorrect output; end direction after computation
+/*					
+					//note: negative; due to inverted y-axis
+					mainImageTilePosY=mainImageTilePosY-mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
 
-					mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
-					mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);					
-*/
+					//alert("mainImageTilePosY Part2: "+mainImageTilePosY);
+
+					//alert("mainImageTilePosX Part1: "+mainImageTilePosX);
+
+					mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
 					
-					//note: margin before stage width
-					//alert("iStageMaxWidth: "+iStageMaxWidth);
-/*
-					iHorizontalOffset=(screen.width)/2-iStageMaxWidth/2;	
-					iVerticalOffsetInnerScreen=0;					
-*/
-					//alert("iHorizontalOffset: "+iHorizontalOffset);					
+					//alert("mainImageTilePosX Part2: "+mainImageTilePosX);
+
+
+		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
+*/		
 					break;
 				case 'touch':
 /*				
@@ -1187,14 +988,6 @@ edited by: Huy Nguyen, 20170124T0455
 -->
 
 		<img id="mainImageTileImageId" class="ImageTileFrame1" src="../assets/images/inputImage.png">	
-
-<!--	
-		iDefaultAnimationImageX=-32;//0; //default x		
- 		iDefaultAnimationImageY=-32; //default y
-		iTotalAnimImageFrameCount=2;
-		iImageFrameWidth=0;
-		iImageFrameHeight=32;
--->
 
 	<table class="TableSetPanel" id="tableSetPanelId">
 	<tr>
