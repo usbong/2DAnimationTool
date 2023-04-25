@@ -167,7 +167,24 @@
 	const iCountMovementDiagonalStepMax=5; //10 
 	var iCountMovementDiagonalStep=iCountMovementDiagonalStepMax;
 	var iMainImageTileStepAngle=0;
-	
+	//added by Mike, 20230425
+//	var iMainImageTileStepAngleTemp=350;//0;//90;
+	//var iMainImageTileStepAngleTemp=0;//0;//90;//360;
+	//360 and 0, @12 o'clock; rotation; image; not step direction
+	//actual movement? 360 1,0; x,y
+//	var iMainImageTileStepAngleTemp=90;//incorrect direction
+//	var iMainImageTileStepAngleTemp=0;//incorrect direction	
+//movement in quadrants;
+//	var iMainImageTileStepAngleTemp=270;//0,1; x,y; inverted y
+//	var iMainImageTileStepAngleTemp=180;//-1,0; x,y
+//	var iMainImageTileStepAngleTemp=90;//0,-1; x,y; inverted y
+//	var iMainImageTileStepAngleTemp=0;//1,0; x,y;
+//	var iMainImageTileStepAngleTemp=360;//1,0; x,y;
+//	var iMainImageTileStepAngleTemp=80;//farther to 90; why?
+//    var iMainImageTileStepAngleTemp=20;//nearer to 90; why?				
+    //var iMainImageTileStepAngleTemp=170;//farther to 180; why?			    
+    var iMainImageTileStepAngleTemp=0;
+    
 	//added by Mike, 20230423
 	var iMousePointPosX=0;
 	var iMousePointPosY=0;
@@ -656,6 +673,7 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 //25%/2 = 12.5%
 mainImageTile.style.transformOrigin = "12.5% 12.5%";
 
+/*
 //clockwise
 //iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 //counter-clockwise	
@@ -663,6 +681,13 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle-1)%360;
 	
 				
 					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
+*/
+
+//alert(iMainImageTileStepAngleTemp);
+
+//iMainImageTileStepAngleTemp+=1;
+
+mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngleTemp % 360) +"deg)";
 					
 			
 		//notes: delay before CHANGE in frame
@@ -855,7 +880,7 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle-1)%360;
 /*
 					iMainImageTileStepAngle+=1;
 */
-
+iMainImageTileStepAngleTemp+=10;
 /*
 					iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 										
@@ -863,44 +888,137 @@ iMainImageTileStepAngle=(iMainImageTileStepAngle-1)%360;
 	
 					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
 */				
+
+//iMainImageTileStepAngleTemp-=1;
+//MainImageTileStepAngleTemp=270;
+
 					//note: start 0 @clock 12 o'clock; clock-wise
 					//adds: image's top
 					//edited by Mike, 20230425
 					//counter-clockwise; 
 					//note: equation; output, correct; quadrants;	
-					iMainImageTileStepAngleTemp=((-1*iMainImageTileStepAngle+90)%(360+90))%360;
+				//iMainImageTileStepAngleTemp=((-1*iMainImageTileStepAngle+90)%(360+90))%360;
+					
+					//iMainImageTileStepAngleTemp+=90;
 					
 					//alert(iMainImageTileStepAngleTemp);					
 									
-					var fMainImageTileStepAngleRad=iMainImageTileStepAngleTemp*Math.PI/180.0;			
+					var fMainImageTileStepAngleRad=iMainImageTileStepAngleTemp*Math.PI/180.0;		
+	
+					
+//iMainImageTileStepAngleTempV2=((iMainImageTileStepAngle+90)%(360+90))%360;					
+
+//					var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
+					
+					//var fMainImageTileStepAngleRad=iMainImageTileStepAngleTemp*Math.PI/180.0;		
 							
 					//alert(fMainImageTileStepAngleRad);
 
-mainImageTileStepX=2;
-mainImageTileStepY=2;
+					mainImageTileStepX=2;
+					mainImageTileStepY=2;	
+
+//edited by Mike, 20230425
+//TO-DO: -update: this; incorrect output; end direction after computation
+					//note: negative; due to inverted y-axis
+					newMainImageTilePosY=mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad).toFixed(3);				
+
+
+//					alert(newMainImageTilePosY);				
+					newMainImageTilePosY*=-1;
+
+					//alert("mainImageTilePosY Part2: "+mainImageTilePosY);
+
+//					alert("mainImageTilePosX Part1: "+mainImageTilePosX);
+
+					newMainImageTilePosX=mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad).toFixed(3);
+
+
+					//alert(newMainImageTilePosX);				
+//newMainImageTilePosX=0;
+					//note: cos(90); not zero; infinity;
+					//computer computation;
+					
+//					alert("mainImageTilePosX Part2: "+mainImageTilePosX);
+/*					
+					alert("newMainImageTilePosY: "+newMainImageTilePosY);
+					alert("newMainImageTilePosX: "+newMainImageTilePosX);
+*/
+					
+					//reference: https://stackoverflow.com/questions/8388440/converting-a-double-to-an-int-in-javascript-without-rounding; last accessed: 20230425
+					//answer by: kubetz, 20111205T1630
+					//edited by: Rooke, 20160329T1858
+
+					//identify the quadrant; start @1
+					var iQuadrant = parseInt(iMainImageTileStepAngleTemp/90,10)+1;					
+					//alert(iQuadrant);
+/*
+					switch (iQuadrant) {
+						case 1:
+							mainImageTileStepX=2;
+							mainImageTileStepY=-2;							
+							break;
+						case 2:
+							mainImageTileStepX=-2;
+							mainImageTileStepY=-2;							
+							break;
+						case 3:
+							mainImageTileStepX=-2;
+							mainImageTileStepY=2;							
+							break;
+						case 4:
+							mainImageTileStepX=2;
+							mainImageTileStepY=2;							
+							break;							
+					}
+*/
+
+/*
+					//TO-DO: -update: this; incorrect output
+					switch (iQuadrant) {
+						case 1:
+							newMainImageTilePosX*=1;
+							newMainImageTilePosY*=-1;
+							break;
+						case 2:
+						//alert("dito");
+							newMainImageTilePosX*=1;
+							newMainImageTilePosY*=-1;							
+////alert("newMainImageTilePosX: "+newMainImageTilePosX);					
+////alert("newMainImageTilePosY: "+newMainImageTilePosY);
+							break;
+						case 3:
+							newMainImageTilePosX*=1;
+							newMainImageTilePosY*=-1;
+							break;
+						case 4:
+							newMainImageTilePosX*=1;
+							newMainImageTilePosY*=-1;					
+////alert("newMainImageTilePosX: "+newMainImageTilePosX);					////alert("newMainImageTilePosY: "+newMainImageTilePosY);
+							break;							
+					}
+*/
+
+
+
+ //movement
+	mainImageTilePosY=mainImageTilePosY+newMainImageTilePosY;
+
+					//alert("mainImageTilePosY Part2: "+mainImageTilePosY);
+
+//					alert("mainImageTilePosX Part1: "+mainImageTilePosX);
+
+					mainImageTilePosX=mainImageTilePosX+newMainImageTilePosX;
+					
+//					alert("mainImageTilePosX Part2: "+mainImageTilePosX);
+
+
 										
 					//alert("mainImageTileStepX: "+mainImageTileStepX);
 					
 					//alert("mainImageTilePosY Part1: "+mainImageTilePosY);
-
-//edited by Mike, 20230425
-//TO-DO: -update: this; incorrect output; end direction after computation
-/*					
-					//note: negative; due to inverted y-axis
-					mainImageTilePosY=mainImageTilePosY-mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
-
-					//alert("mainImageTilePosY Part2: "+mainImageTilePosY);
-
-					//alert("mainImageTilePosX Part1: "+mainImageTilePosX);
-
-					mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
-					
-					//alert("mainImageTilePosX Part2: "+mainImageTilePosX);
-
-
 		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
 		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
-*/		
+
 					break;
 				case 'touch':
 /*				
