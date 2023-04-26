@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230425; from 20230424
+' @date updated: 20230426; from 20230425
 ' @website: www.usbong.ph
 '
 '
@@ -29,6 +29,14 @@
 '
 ' 3) http://localhost/usbong_2DAnimationTool/html_application/usbong2DAnimationTool.html;
 ' last accessed: 20230311
+'
+' 4) https://stackoverflow.com/questions/5027950/coordinates-for-my-javascript-game-based-on-an-angle-when-do-i-use-sin-cos-an;
+' last accessed: 20230426
+' answer by: Jimmy, 20110217T1212; from 20110217T1106
+'
+' 5) https://www.mathsisfun.com/sine-cosine-tangent.html;
+' last accessed: 20230426
+'
 '*/
 //added by Mike, 20230313
 //TO-DO: -add: adjustable "STAGE" SIZE textbox
@@ -880,7 +888,10 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngleTemp % 360) +
 /*
 					iMainImageTileStepAngle+=1;
 */
+
 iMainImageTileStepAngleTemp+=10;
+//iMainImageTileStepAngleTemp=90;
+
 /*
 					iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 										
@@ -908,6 +919,7 @@ iMainImageTileStepAngleTemp+=10;
 					
 //iMainImageTileStepAngleTempV2=((iMainImageTileStepAngle+90)%(360+90))%360;					
 
+
 //					var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;			
 					
 					//var fMainImageTileStepAngleRad=iMainImageTileStepAngleTemp*Math.PI/180.0;		
@@ -920,7 +932,8 @@ iMainImageTileStepAngleTemp+=10;
 //edited by Mike, 20230425
 //TO-DO: -update: this; incorrect output; end direction after computation
 					//note: negative; due to inverted y-axis
-					newMainImageTilePosY=mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad).toFixed(3);				
+					//newMainImageTilePosY=mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad).toFixed(3);				
+					newMainImageTilePosY=mainImageTileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);				
 
 
 //					alert(newMainImageTilePosY);				
@@ -930,8 +943,24 @@ iMainImageTileStepAngleTemp+=10;
 
 //					alert("mainImageTilePosX Part1: "+mainImageTilePosX);
 
-					newMainImageTilePosX=mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad).toFixed(3);
+					//newMainImageTilePosX=mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad).toFixed(3);
+					
+					newMainImageTilePosX=mainImageTileStepX*Math.sin(fMainImageTileStepAngleRad).toFixed(3);
 
+
+if (iMainImageTileStepAngleTemp>=90) {
+//alert(iMainImageTileStepAngleTemp);
+/*
+alert("sin: "+Math.sin(fMainImageTileStepAngleRad).toFixed(3));
+alert("cos: "+Math.cos(fMainImageTileStepAngleRad).toFixed(3));
+*/
+/*
+alert("mainImageTileStepY: "+mainImageTileStepY);
+
+alert("newMainImageTilePosX: "+newMainImageTilePosX);
+alert("newMainImageTilePosY: "+newMainImageTilePosY);
+*/
+}
 
 					//alert(newMainImageTilePosX);				
 //newMainImageTilePosX=0;
