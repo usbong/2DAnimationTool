@@ -30,9 +30,22 @@ https://github.com/usbong/2DAnimationTool.git
 
 2) [Lessons-learned: GAME MAKER STUDIO](https://github.com/usbong/newsletters/blob/main/notes/LessonsLearned/GameMakerStudio/GameMakerStudioV20230216.md)
 
-## Additional Example
+## Additional Examples
 
-<img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationToolMotionTweenRotationClippedImageOKV20230424T1500.gif" width="30%">
+<table>
+<tr>
+<td>
+
+<img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationToolMotionTweenRotationClippedImageOKV20230424T1500.gif" width="80%">
+
+</td>
+<td>
+
+<img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationSOH-CAH-TOANoteMiddleHighSchoolLevelShareKnowHowV20230427T0932.gif" width="80%">
+
+</td>
+</tr>
+</table>
 
 ## Additional Useful Tools
 
