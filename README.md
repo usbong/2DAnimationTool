@@ -47,6 +47,17 @@ https://github.com/usbong/2DAnimationTool.git
 </tr>
 </table>
 
+## Math Explanation
+
+1) https://www.mathsisfun.com/sine-cosine-tangent.html; last accessed: 20230427
+
+## Additional References
+
+1) [NAMCOT GALAGA 1981](https://nc.bn-ent.net/title-lineup/title.php?tit=galaga)
+
+2) [ZUMA DELUXE 2003](https://store.steampowered.com/app/3330/Zuma_Deluxe/)<br/>
+--> FREE DEMO version available (Windows Machine)
+
 ## Additional Useful Tools
 
 1) https://www.gimp.org/; last accessed: 20230322
