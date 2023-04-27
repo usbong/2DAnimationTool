@@ -181,6 +181,11 @@
 	var iMainImageTileStepAngle=0;
     //var iMainImageTileStepAngleTemp=0;
     
+    //added by Mike, 20230427
+    var newMainImageTileProjectilePosX=0;
+    var newMainImageTileProjectilePosY=0;
+    var bHasFired=false;
+    
 	//added by Mike, 20230423
 	var iMousePointPosX=0;
 	var iMousePointPosY=0;
@@ -274,6 +279,13 @@
 	//edited by Mike, 20230418
 	var mainImageTileStepX=0; //2;
 	var mainImageTileStepY=0; //2;
+	
+	//added by Mike, 20230427
+	var mainImageTileProjectilePosX=0;
+	var mainImageTileProjectilePosY=0;
+	//edited by Mike, 20230418
+	var mainImageTileProjectileStepX=2;//0; //2;
+	var mainImageTileProjectileStepY=2;//0; //2;
 		
 	//edited by Mike, 20230314
 /*	
@@ -563,7 +575,27 @@
 		
 	}
 	
-	
+	//added by Mike, 20230427
+	function resetProjectile() {
+		var mainImageTileProjectile = document.getElementById("mainImageTileProjectileImageId");
+		
+		//added by Mike, 20230427
+		mainImageTileProjectilePosX=iStageMaxWidth/2-iImageFrameWidth/2;
+		mainImageTileProjectilePosY=iStageMaxHeight/2-iImageFrameHeight/2;
+		
+		//TO-DO: -update: newMainImage... step
+		newMainImageTileProjectilePosX=0; //mainImageTileProjectilePosX;
+		newMainImageTileProjectilePosY=0; //mainImageTileProjectilePosY;
+		
+		mainImageTileProjectile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+		
+		mainImageTileProjectile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";	
+		
+		mainImageTileProjectile.style.visibility="hidden";
+		bHasFired=false;		
+		
+		alert("dito");
+	}
 
 	//added by Mike, 20230312	
 	//TO-DO: -update: variable container names
@@ -595,6 +627,9 @@
 		//added by Mike, 20230315
 		var setPanelTable = document.getElementById("tableSetPanelId");
 		var mainImageTile = document.getElementById("mainImageTileImageId");
+		
+		var mainImageTileProjectile = document.getElementById("mainImageTileProjectileImageId");
+					
 				
 		setAnimImageFrameWidthText.value=iImageFrameWidth;
 		setAnimImageFrameHeightText.value=iImageFrameHeight;
@@ -622,10 +657,25 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
 		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
 		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
 
+		//added by Mike, 20230427
+		mainImageTileProjectilePosX=iStageMaxWidth/2-iImageFrameWidth/2;
+		mainImageTileProjectilePosY=iStageMaxHeight/2-iImageFrameHeight/2;
+		
+		//TO-DO: -update: "newMain" to ..."step"
+		newMainImageTileProjectilePosX=0;//mainImageTileProjectilePosX;
+		newMainImageTileProjectilePosY=0;//mainImageTileProjectilePosY;
+				
+		mainImageTileProjectile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+		
+		mainImageTileProjectile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";	
+
 	}
 	
 	function myUpdateFunction() {	
 		var mainImageTile = document.getElementById("mainImageTileImageId");
+		//added by Mike, 20230427
+		var mainImageTileProjectile = document.getElementById("mainImageTileProjectileImageId");
+		
 		//var setAnimImageFrameXButton = document.getElementById("buttonSetAnimImageFrameXId");
 		var setPanelTable = document.getElementById("tableSetPanelId");
 
@@ -662,27 +712,69 @@ setAnimDelayText.value=iDelayAnimationCountMovementStepMax;
  //removed by Mike, 20230424
 		//edited by Mike, 20230423; from 20230321
 		mainImageTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
+		
+		//added by Mike, 20230427
+//		mainImageTileProjectile.style.clip = "rect("+iImageFrameWidth*2+"px "+iImageFrameWidth+"px "+iImageFrameHeight+"px "+iImageFrameWidth*2+"px)";
 
+		mainImageTileProjectile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
 
 //reference: https://developer.mozilla.org/en-US/docs/Web/CSS/transform-origin; last accessed: 20230424
 //note: transform rotate uses whole unclipped image size; 256x256px
 //25%/2 = 12.5%
 mainImageTile.style.transformOrigin = "12.5% 12.5%";
 
-/*
+
 //clockwise
 //iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
 //counter-clockwise	
-iMainImageTileStepAngle=(iMainImageTileStepAngle-1)%360;
+//iMainImageTileStepAngle=(iMainImageTileStepAngle-1)%360;
+
+//edited by Mike, 20230427
+if (!bHasFired) {
+//clockwise
+iMainImageTileStepAngle=(iMainImageTileStepAngle+1)%360;
+
 					mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
-*/
+}
 
-//alert(iMainImageTileStepAngleTemp);
+//mainImageTile.style.transform = "rotate("+ (fMainImageTileStepAngleDegrees % 360) +"deg)";
 
-//iMainImageTileStepAngleTemp+=1;
+
+
+/*
+iMainImageTileStepAngle+=5;
+
+	var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;		
 
 mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg)";
 					
+			
+			
+mainImageTileStepX=15; //2;
+					mainImageTileStepY=15; //2;	
+
+					//note: negative; due to inverted y-axis
+					//newMainImageTilePosY=mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad).toFixed(3);				
+				newMainImageTilePosY=mainImageTileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);				
+
+//					alert(newMainImageTilePosY);				
+					newMainImageTilePosY*=-1;
+
+
+					//newMainImageTilePosX=mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad).toFixed(3);
+										newMainImageTilePosX=mainImageTileStepX*Math.sin(fMainImageTileStepAngleRad).toFixed(3);
+										
+							
+							mainImageTilePosY=mainImageTilePosY+newMainImageTilePosY;
+					mainImageTilePosX=mainImageTilePosX+newMainImageTilePosX;
+									
+					//alert("mainImageTileStepX: "+mainImageTileStepX);					
+					//alert("mainImageTilePosY Part1: "+mainImageTilePosY);
+		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
+		*/
+		
+													
 			
 		//notes: delay before CHANGE in frame
 		//adds max (12) frames before frame update
@@ -794,7 +886,62 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 /*	//removed by Mike, 20230425
 		mainImageTile.style.left = (iHorizontalOffset)+mainImageTilePosX+"px";		
 		mainImageTile.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY+"px";	
-*/		
+*/
+		
+
+	  //added by Mike, 20230427
+	  //movement
+	  if (bHasFired) {
+/*
+//alert("mainImageTileProjectilePosY: "+mainImageTileProjectilePosY);	
+mainImageTileProjectilePosY=mainImageTileProjectilePosY+newMainImageTileProjectilePosY;
+//alert("newMainImageTileProjectilePosY: "+newMainImageTileProjectilePosY);
+					mainImageTileProjectilePosX=mainImageTileProjectilePosX+newMainImageTileProjectilePosX;
+*/
+mainImageTileProjectilePosY=mainImageTileProjectilePosY+newMainImageTileProjectilePosY;
+					mainImageTileProjectilePosX=mainImageTileProjectilePosX+newMainImageTileProjectilePosX;
+
+/*
+mainImageTileProjectilePosY++;
+//alert("newMainImageTileProjectilePosY: "+newMainImageTileProjectilePosY);
+					mainImageTileProjectilePosX++;								*/	
+					//alert("mainImageTileStepX: "+mainImageTileStepX);										
+mainImageTileProjectile.style.visibility = "visible";					
+					
+					
+		mainImageTileProjectile.style.left = (iHorizontalOffset)+mainImageTileProjectilePosX+"px";		
+		mainImageTileProjectile.style.top = (iVerticalOffsetInnerScreen)+mainImageTileProjectilePosY+"px";	
+
+/*
+		mainImageTileProjectile.style.left = (iHorizontalOffset+mainImageTilePosX)+mainImageTileProjectilePosX+"px";		
+		
+		mainImageTileProjectile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+mainImageTileProjectilePosY+"px";	
+*/
+
+//STAGE; MAX
+//TO-DO: -fix: this
+	/*	
+		if (mainImageTileProjectilePosX+iImageFrameWidth>iHorizontalOffset+iStageMaxWidth) {
+			resetProjectile();	
+		}
+		else */
+		/*if (mainImageTileProjectilePosX<0){//+iHorizontalOffset) {
+		
+				alert(mainImageTileProjectilePosX);
+				resetProjectile();			
+		}
+*/
+/*
+		if (mainImageTileProjectilePosY+iImageFrameHeight>iVerticalOffset+iStageMaxHeight) {
+			resetProjectile();
+		}
+		else if (mainImageTileProjectilePosY<0+iVerticalOffset) {		
+			resetProjectile();		
+		}
+*/
+
+	  }
+
 
 //		mainImageTilePosX++;
 //		mainImageTilePosX--;
@@ -809,6 +956,7 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 		mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
 		mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
 */
+
 
 		
 		//TO-DO: -add: function; AI; Artificial Intelligence
@@ -833,6 +981,11 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 		//edited by Mike, 20230423; from 20230321;
 		mainImageTile.style.visibility = "visible";
 		//mainImageTile.style.visibility = "hidden";
+		
+		//removed by Mike, 20230427
+		//mainImageTileProjectile.style.visibility = "visible";
+
+	
 
 /*		
 		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
@@ -875,26 +1028,104 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 //iMainImageTileStepAngleTemp=90;
 
 					//note: start 0 @clock 12 o'clock; clock-wise
-					iMainImageTileStepAngle=(iMainImageTileStepAngle+10)%360;
-										
+
+/*					iMainImageTileStepAngle=(iMainImageTileStepAngle+10)%360;
+*/										
 					//alert(iMainImageTileStepAngle);
+/*	
+					//added by Mike, 20230427
+newMainImageTilePosY=mainImageTileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);				
+
+//					alert(newMainImageTilePosY);				
+					newMainImageTilePosY*=-1;
+										newMainImageTilePosX=mainImageTileStepX*Math.sin(fMainImageTileStepAngleRad).toFixed(3);
+*/										
+
+	
+/*	
+	iYPos=iYPos-(mainImageTilePosY+iVerticalOffsetInnerScreen);
+	iXPos=iXPos-(mainImageTilePosX+iHorizontalOffset);
+	
+	alert("iYPos: "+iYPos);
+	alert("iXPos: "+iXPos);
+	
+	if (iYPos<0) {
+		iYPos*=-1;
+	}
+	if (iXPos<0) {
+		iXPos*=-1;
+	}
+*/	
 	
 					//adds: image's top
 					//edited by Mike, 20230425
 					//counter-clockwise; 
 					//note: equation; output, correct; quadrants;	
 				//iMainImageTileStepAngleTemp=((-1*iMainImageTileStepAngle+90)%(360+90))%360;
-					
+
+/*					
 					var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;		
+					*/
 	
 					//alert(fMainImageTileStepAngleRad);
 
-					mainImageTileStepX=2;
-					mainImageTileStepY=2;	
+					mainImageTileStepX=14; //2;
+					mainImageTileStepY=14; //2;	
 
-					//note: negative; due to inverted y-axis
+					
+///TO-DO: -compute: angle based on mouse position;
+
+//newMainImageTilePosY=mainImageTileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);		
+
+					//var iYPosTemp=iYPos*-1;
+					
+					//alert(iYPosTemp);	
+					
+					//alert(iYPos);
+					
+					//note: object @center
+					//mainImageTileStepX=mainImageTileStepX-iXPos
+
+
+//Reference#1:https://www.mathsisfun.com/algebra/trig-finding-angle-right-triangle.html; last accessed: 20230427
+//angle = atan(O/A)
+
+//Reference#2: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/atan2; last accessed: 202304287
+
+//iMainImageTileStepAngle=Math.atan(300/400).toFixed(3);
+//iMainImageTileStepAngle=Math.atan(-iYPos/iXPos).toFixed(3);
+/*
+//TO-DO: -fix: this
+iMainImageTileStepAngle=Math.atan2(iYPos,iXPos).toFixed(3);
+						var fMainImageTileStepAngleDegrees=iMainImageTileStepAngle*180.0/Math.PI;	
+*/
+
+					var fMainImageTileStepAngleRad=iMainImageTileStepAngle*Math.PI/180.0;	
+					
+
+			
+//fMainImageTileStepAngleDegrees = (fMainImageTileStepAngleDegrees + 360) % 360;  // +360 for implementations where mod returns negative numbers
+
+//					alert(newMainImageTilePosY);				
+/*
+alert("iYPos: "+iYPos);	
+alert("iXPos: "+iXPos);
+
+alert("iMainImageTileStepAngle: "+iMainImageTileStepAngle);
+alert("fMainImageTileStepAngleDegrees: "+fMainImageTileStepAngleDegrees);
+*/			
+
+/*
+			iMainImageTileStepAngle=fMainImageTileStepAngleDegrees;
+*/					
+
+//alert(iMainImageTileStepAngle);
+
+
+/* //edited by Mike, 20230427	
+//note: negative; due to inverted y-axis
 					//newMainImageTilePosY=mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad).toFixed(3);				
-				newMainImageTilePosY=mainImageTileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);				
+			newMainImageTilePosY=mainImageTileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);				
 
 //					alert(newMainImageTilePosY);				
 					newMainImageTilePosY*=-1;
@@ -902,8 +1133,31 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 
 					//newMainImageTilePosX=mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad).toFixed(3);
 										newMainImageTilePosX=mainImageTileStepX*Math.sin(fMainImageTileStepAngleRad).toFixed(3);
+*/
 
-					
+mainImageTileProjectileStepY=20;
+mainImageTileProjectileStepX=20;
+
+
+newMainImageTileProjectilePosY=mainImageTileProjectileStepY*Math.cos(fMainImageTileStepAngleRad).toFixed(3);
+
+//start position @center
+//newMainImageTileProjectilePosY+=iVerticalOffsetInnerScreen+mainImageTilePosY;
+//newMainImageTileProjectilePosY=(iVerticalOffsetInnerScreen+mainImageTilePosY+mainImageTileProjectileStepY)*Math.cos(fMainImageTileStepAngleRad).toFixed(3);
+
+					newMainImageTileProjectilePosY*=-1;	
+												newMainImageTileProjectilePosX=mainImageTileProjectileStepX*Math.sin(fMainImageTileStepAngleRad).toFixed(3);
+
+//newMainImageTileProjectilePosX=(iHorizontalOffset+mainImageTilePosX+mainImageTileProjectileStepX)*Math.sin(fMainImageTileStepAngleRad).toFixed(3);
+	
+
+
+					bHasFired=true;
+
+/*
+					alert("newMainImageTileProjectilePosY: "+newMainImageTileProjectilePosY);
+											alert("newMainImageTileProjectilePosX: "+newMainImageTileProjectilePosX);		*/
+																
 					//reference: https://stackoverflow.com/questions/8388440/converting-a-double-to-an-int-in-javascript-without-rounding; last accessed: 20230425
 					//answer by: kubetz, 20111205T1630
 					//edited by: Rooke, 20160329T1858
@@ -932,7 +1186,7 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 					}
 */
 
-
+/*
 				    //movement
 					mainImageTilePosY=mainImageTilePosY+newMainImageTilePosY;
 					mainImageTilePosX=mainImageTilePosX+newMainImageTilePosX;
@@ -941,6 +1195,8 @@ mainImageTile.style.transform = "rotate("+ (iMainImageTileStepAngle % 360) +"deg
 					//alert("mainImageTilePosY Part1: "+mainImageTilePosY);
 		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
 		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
+*/		
+		
 					break;
 				case 'touch':
 /*				
@@ -1028,6 +1284,8 @@ edited by: Huy Nguyen, 20170124T0455
 -->
 
 		<img id="mainImageTileImageId" class="ImageTileFrame1" src="../assets/images/inputImage.png">	
+		
+		<img id="mainImageTileProjectileImageId" class="ImageTileFrame1" src="../assets/images/inputImage.png">	
 
 	<table class="TableSetPanel" id="tableSetPanelId">
 	<tr>
