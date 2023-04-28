@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20230426; from 20230425
+' @date updated: 20230428; from 20230426
 ' @website: www.usbong.ph
 '
 '
@@ -594,7 +594,7 @@
 		mainImageTileProjectile.style.visibility="hidden";
 		bHasFired=false;		
 		
-		alert("dito");
+		//alert("dito");
 	}
 
 	//added by Mike, 20230312	
@@ -920,28 +920,44 @@ mainImageTileProjectile.style.visibility = "visible";
 
 //STAGE; MAX
 //TO-DO: -fix: this
-	/*	
-		if (mainImageTileProjectilePosX+iImageFrameWidth>iHorizontalOffset+iStageMaxWidth) {
+	
+//		if (mainImageTileProjectilePosX+iImageFrameWidth>iHorizontalOffset+iStageMaxWidth) {
+
+	//edited by Mike, 20230428; OK; inside stage border;
+		if (mainImageTileProjectilePosX+iImageFrameWidth>iStageMaxWidth) {
 			resetProjectile();	
 		}
-		else */
-		/*if (mainImageTileProjectilePosX<0){//+iHorizontalOffset) {
-		
-				alert(mainImageTileProjectilePosX);
+		else if (mainImageTileProjectilePosX<0){//+iHorizontalOffset) {		
 				resetProjectile();			
 		}
-*/
-/*
-		if (mainImageTileProjectilePosY+iImageFrameHeight>iVerticalOffset+iStageMaxHeight) {
+//		if (mainImageTileProjectilePosY+iImageFrameHeight>iVerticalOffset+iStageMaxHeight) {
+
+		if (mainImageTileProjectilePosY+iImageFrameHeight>iStageMaxHeight) {
 			resetProjectile();
 		}
-		else if (mainImageTileProjectilePosY<0+iVerticalOffset) {		
+//		else if (mainImageTileProjectilePosY<0+iVerticalOffset) {		
+		else if (mainImageTileProjectilePosY<0) {
 			resetProjectile();		
 		}
-*/
 
+/* //outside stage border;
+		if (mainImageTileProjectilePosX>iStageMaxWidth) {
+			resetProjectile();	
+		}
+		else 
+		if (mainImageTileProjectilePosX+iImageFrameWidth<0) {
+				resetProjectile();			
+		}
+
+		if (mainImageTileProjectilePosY>iStageMaxHeight) {
+			resetProjectile();
+		}
+		else if (mainImageTileProjectilePosY+iImageFrameHeight<0) {
+			resetProjectile();		
+		}
+*/		
+		
 	  }
-
 
 //		mainImageTilePosX++;
 //		mainImageTilePosX--;
@@ -991,6 +1007,15 @@ mainImageTileProjectile.style.visibility = "visible";
 		setAnimImageFrameXButton.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
 		setAnimImageFrameXButton.style.top = (iVerticalOffsetInnerScreen)+"px"; //+iStageMaxHeight
 */		
+
+
+		//added by Mike, 20230428
+		mainImageTilePosX=iStageMaxWidth/2-iImageFrameWidth/2;
+		mainImageTilePosY=iStageMaxHeight/2-iImageFrameHeight/2;
+		mainImageTile.style.left = (iHorizontalOffset+mainImageTilePosX)+"px";	
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen+mainImageTilePosY)+"px";
+
+
 
 		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
 		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px"; //+iStageMaxHeight
