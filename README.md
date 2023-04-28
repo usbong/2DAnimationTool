@@ -44,15 +44,16 @@ https://github.com/usbong/2DAnimationTool.git
 <img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationSOH-CAH-TOANoteMiddleHighSchoolLevelShareKnowHowV20230427T0932.gif" width="90%">
 
 </td>
-
 <td>
 
 <img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationMathDefenseSellProductShareTechniqueV20230428T1039.gif" width="90%">
 
 </td>
-
 </tr>
 </table>
+<br/>
+<br/>
+<img src="https://github.com/usbong/2DAnimationTool/blob/main/screenshots/usbong2DAnimationProjectileTargetMousePositionV20230428T1555.gif" width="40%">
 
 ## Math Explanation
 
