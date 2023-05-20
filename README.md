@@ -72,6 +72,13 @@ https://github.com/usbong/2DAnimationTool.git
 
 2) https://www.libreoffice.org/; last accessed: 20230322
 
+## Related Example: EFFECTS
+
+1) https://github.com/usbong/TIME
+
+<img src="https://github.com/usbong/TIME/blob/main/screenshots/usbongTIME-NoteEFFECTSV20230520T1553.gif" width="40%">
+
+
 ## Open Source Software License
 Copyright 2023 SYSON, MICHAEL B.
 
