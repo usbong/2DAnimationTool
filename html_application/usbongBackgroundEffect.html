@@ -11,7 +11,7 @@
 ' @company: USBONG
 ' @author: SYSON, MICHAEL B.
 ' @date created: 20221214
-' @date updated: 20250929; from 20230422
+' @date updated: 20250930; from 20250929
 ' @website: www.usbong.ph
 '
 '
@@ -26,8 +26,9 @@
 <!-- TO-DO: -update: this -->
 <!-- //edited by Mike, 20230314 //TO-DO: -add: option to set IF from internet
 -->
+<!--
   	<base href="http://localhost/usbong_2DAnimationTool/" target="_blank">
-
+-->
 
 <!--
   	<base href="http://store.usbong.ph/" target="_blank">
@@ -46,10 +47,7 @@
             font-family: Arial;
 			font-size: 11pt;
 				
-			/* edited by Mike, 20220911
-			width: 640px; 
-			*/
-			width: 100%; /*90%; 80%;*/
+			width: 100%;
 			height: 100%;
 										
 			padding: 0;
@@ -220,7 +218,22 @@
 	var iDelayAnimationCountMovementStep=0;
 	var iDelayAnimationCountMovementStepMax=12; //6; 
 
-	//edited by Mike, 20250929; from 20230410
+	//edited by Mike, 20250930; from 20250929
+	const iTotalImageTileCount=24;//18; //12;//4;
+	
+	var arrayMainImageTile = [];
+	
+	var arrayMainImageTilePosX = [];
+	var arrayMainImageTilePosY = [];
+
+	for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+		//arrayMainImageTile[iCount]=document.getElementById("mainImageTileImageId"+iCount);
+	
+		arrayMainImageTilePosX[iCount]=0;
+		arrayMainImageTilePosY[iCount]=0;
+	}
+	
+/*
 	var mainImageTilePosX=0;
 	var mainImageTilePosY=0;
 	
@@ -232,11 +245,13 @@
 
 	var mainImageTilePosX4=0;
 	var mainImageTilePosY4=0;
+*/
+
 
 	//edited by Mike, 20250929; from 20230418
 	var mainImageTileStepX=1;//1; //2;
 	//TODO: -update: this
-	var mainImageTileStepY=0;//1;//2; //2;
+	var mainImageTileStepY=1;//0;//2; //2;
 		
 	//edited by Mike, 20230314
 /*	
@@ -254,34 +269,6 @@
 	iHorizontalOffset=(screen.width)/2-iStageMaxWidth/2;	
 	iVerticalOffsetInnerScreen=0;
 
-
-	//added by Mike, 20230312
-	//note: press TAB, then ENTER to SET		
-	function setAnimImageFrameX() {	
-		var setAnimImageFrameXText = document.getElementById("textSetAnimImageFrameXId");
-		
-		//notes: auto-sets to negative number;
-		//TO-DO: -add: a checkbox as switch?
-		if (setAnimImageFrameXText.value>0) {
-			setAnimImageFrameXText.value=setAnimImageFrameXText.value*-1;
-		}
-		
-		//alert(setAnimImageFrameXText.value);				
-		iDefaultAnimationImageX=setAnimImageFrameXText.value;//-32;
-	}
-
-	function setAnimImageFrameY() {	
-		var setAnimImageFrameYText = document.getElementById("textSetAnimImageFrameYId");
-		
-		//notes: auto-sets to negative number;
-		//TO-DO: -add: a checkbox as switch?
-		if (setAnimImageFrameYText.value>0) {
-			setAnimImageFrameYText.value=setAnimImageFrameYText.value*-1;
-		}
-		
-		//alert(setAnimImageFrameXText.value);				
-		iDefaultAnimationImageY=setAnimImageFrameYText.value;//-32;
-	}
 
 	//added by Mike, 20230410
 	//reference: timeoff.php
@@ -514,15 +501,55 @@
 		iImageFrameWidth=128; //64;// 32; //0;
 		iImageFrameHeight=128;//64;// 32;		
 
-		var mainImageTile = document.getElementById("mainImageTileImageId");
+		//var mainImageTile = document.getElementById("mainImageTileImageId");
+		
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			arrayMainImageTile[iCount]=document.getElementById("mainImageTileImageId"+(iCount));
+			arrayMainImageTilePosX[iCount]=0;
+			arrayMainImageTilePosY[iCount]=0;
+		}
+		
+		//TODO: -update: this
+		iHorizontalOffset=0;
+		iVerticalOffsetInnerScreen=0;
+		
+		var iCurrColumn=0;
+		var iCurrRow=-1;//0; to start at zero
+	
+		//from left to right
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			if (iCurrRow>=3) { //max 3 per row
+				iCurrColumn++;
+				iCurrRow=0;
+			}
+			else {
+				iCurrRow++;
+			}
+
+//alert(iCurrRow);
+
+			arrayMainImageTilePosX[iCount]=(iHorizontalOffset)+iImageFrameWidth*(iCurrColumn-1);	
+			arrayMainImageTile[iCount].style.left=arrayMainImageTilePosX[iCount]+"px";
+			
+			arrayMainImageTilePosY[iCount]=(iVerticalOffsetInnerScreen)+iImageFrameHeight*(iCurrRow);	
+			arrayMainImageTile[iCount].style.top=arrayMainImageTilePosY[iCount]+"px";
+			
+		}
 	}
 	
 	function myUpdateFunction() {	
+/*	
 		var mainImageTile = document.getElementById("mainImageTileImageId");
 		var mainImageTile2 = document.getElementById("mainImageTileImageId2");
 		var mainImageTile3 = document.getElementById("mainImageTileImageId3");
 		var mainImageTile4 = document.getElementById("mainImageTileImageId4");
-
+*/
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			arrayMainImageTile[iCount]=document.getElementById("mainImageTileImageId"+(iCount));
+			
+			//alert(iCount+": "+arrayMainImageTile[iCount].style.left);
+		}
+		
 		//added by Mike, 20230313
 		//reference: https://www.w3schools.com/tags/canvas_fillrect.asp; 
 		//last accessed: 2020911
@@ -545,11 +572,24 @@
 		//added by Mike, 20221012
 		iHorizontalOffset=myCanvas.getBoundingClientRect().x;
 		
-		//added by Mike, 20250929; from 20230321
+		//added by Mike, 20250930; from 20250929
+/*
 		mainImageTile.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
 		mainImageTile2.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
 		mainImageTile3.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
 		mainImageTile4.style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 
+*/
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+/*
+			alert(">>>"+iCount);
+			
+			alert("iImageFrameWidth: "+iImageFrameWidth);
+			alert("iImageFrameHeight: "+iImageFrameHeight);
+*/			
+			arrayMainImageTile[iCount].style.clip = "rect(0px "+iImageFrameWidth+"px "+iImageFrameHeight+"px 0px)"; 	
+		}
+
+		//alert("DITO!!!!");
 
 /*
 		// Clip a rectangular area
@@ -569,31 +609,23 @@
 
 
 			if (animDirectionSelectedIndex==AnimImageDirection_VERTICAL) {
+/*			
 				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
 										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
-											
-
-				mainImageTile2.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
+*/
+				for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+					arrayMainImageTile[iCount].style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
 										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
-											
-
-				mainImageTile3.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
-										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
-											
-
-				mainImageTile4.style.objectPosition=(iDefaultAnimationImageX-(0))+"px "+
-										   	(iDefaultAnimationImageY-(iAnimImageFrameCount*iImageFrameHeight))+"px";
+				}
 			}
 			//AnimImageDirection_HORIZONTAL
 			else {
+/*			
 				mainImageTile.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
-
-
-				mainImageTile2.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
-
-				mainImageTile3.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
-
-				mainImageTile4.style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
+*/
+				for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+					arrayMainImageTile[iCount].style.objectPosition=(iDefaultAnimationImageX-(iAnimImageFrameCount*			iImageFrameWidth))+"px "+(iDefaultAnimationImageY-(0))+"px";	
+				}
 			}
 			
 			if (iAnimImageFrameCount<(iTotalAnimImageFrameCount-1)) {	
@@ -603,19 +635,45 @@
 				iAnimImageFrameCount=0;
 			}			
 		}
+
+/*		
+		mainImageTile.style.left = (iHorizontalOffset)+arrayMainImageTilePosX[0]+"px";		
+		mainImageTile.style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[0]+"px";	
+
+		mainImageTile2.style.left = (iHorizontalOffset)+arrayMainImageTilePosX[1]+"px";		
+		mainImageTile2.style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[1]+iImageFrameHeight+"px";	
+
+		mainImageTile3.style.left = (iHorizontalOffset)+arrayMainImageTilePosX[2]+"px";		
+		mainImageTile3.style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[2]+iImageFrameHeight*2+"px";	
+
+		mainImageTile4.style.left = (iHorizontalOffset)+arrayMainImageTilePosX[3]+"px";		
+		mainImageTile4.style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[3]+iImageFrameHeight*3+"px";	
+*/
+
+/*
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			arrayMainImageTile[iCount].style.left=(iHorizontalOffset)+arrayMainImageTilePosX[iCount]+"px";	
+			arrayMainImageTile[iCount].style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[iCount]+iImageFrameHeight*iCount+"px";	
+		}
+*/
+
+/*
+		var iCurrColumn=0;
+		var iCurrRow=0;
+
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			if (iCount%3==0) { //max 3 per row
+				iCurrColumn++;
+				iCurrRow=0;
+			}
+			else {
+				iCurrRow++;
+			}
 		
-		mainImageTile.style.left = (iHorizontalOffset)+mainImageTilePosX+"px";		
-		mainImageTile.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY+"px";	
-
-		mainImageTile2.style.left = (iHorizontalOffset)+mainImageTilePosX2+"px";		
-		mainImageTile2.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY2+iImageFrameHeight+"px";	
-
-		mainImageTile3.style.left = (iHorizontalOffset)+mainImageTilePosX3+"px";		
-		mainImageTile3.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY3+iImageFrameHeight*2+"px";	
-
-		mainImageTile4.style.left = (iHorizontalOffset)+mainImageTilePosX4+"px";		
-		mainImageTile4.style.top = (iVerticalOffsetInnerScreen)+mainImageTilePosY4+iImageFrameHeight*3+"px";	
-
+			arrayMainImageTile[iCount].style.left=(iHorizontalOffset)+arrayMainImageTilePosX[iCount]+iImageFrameWidth*iCurrColumn+"px";	
+			arrayMainImageTile[iCount].style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[iCount]+iImageFrameHeight*iCurrRow+"px";	
+		}
+*/
 
 		//edited by Mike, 20230418
 		//autoIdentifyNextDirectionAI();
@@ -636,22 +694,28 @@
 			return;
 			
 			//TO-DO: -update: this; corners; curved; 
-			
-			mainImageTilePosY=mainImageTilePosY+mainImageTileStepX/Math.sin(fMainImageTileStepAngleRad);
-			mainImageTilePosX=mainImageTilePosX+mainImageTileStepY/Math.cos(fMainImageTileStepAngleRad);
+/*			
+			arrayMainImageTilePosY[0]+=arrayMainImageTilePosX[0]/Math.sin(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosX[0]+=arrayMainImageTilePosY[0]/Math.cos(fMainImageTileStepAngleRad);
 
-			mainImageTilePosY2=mainImageTilePosY2+mainImageTileStepX2/Math.sin(fMainImageTileStepAngleRad);
-			mainImageTilePosX2=mainImageTilePosX2+mainImageTileStepY2/Math.cos(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosY[1]+=arrayMainImageTilePosX[1]/Math.sin(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosX[1]+=arrayMainImageTilePosY[1]/Math.cos(fMainImageTileStepAngleRad);
 
-			mainImageTilePosY3=mainImageTilePosY3+mainImageTileStepX3/Math.sin(fMainImageTileStepAngleRad);
-			mainImageTilePosX3=mainImageTilePosX3+mainImageTileStepY3/Math.cos(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosY[2]+=arrayMainImageTilePosX[2]/Math.sin(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosX[2]+=arrayMainImageTilePosY[2]/Math.cos(fMainImageTileStepAngleRad);
 
-			mainImageTilePosY4=mainImageTilePosY4+mainImageTileStepX4/Math.sin(fMainImageTileStepAngleRad);
-			mainImageTilePosX4=mainImageTilePosX4+mainImageTileStepY4/Math.cos(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosY[3]+=arrayMainImageTilePosX[3]/Math.sin(fMainImageTileStepAngleRad);
+			arrayMainImageTilePosX[3]+=arrayMainImageTilePosY[3]/Math.cos(fMainImageTileStepAngleRad);
+*/
+			for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+				arrayMainImageTilePosY[iCount]+=arrayMainImageTilePosX[iCount]/Math.sin(fMainImageTileStepAngleRad);
+				arrayMainImageTilePosX[iCount]+=arrayMainImageTilePosY[iCount]/Math.cos(fMainImageTileStepAngleRad);
+			}
 
 			iCountMovementDiagonalStep++;
 		}
 		else {
+/*			
 			mainImageTilePosX+=mainImageTileStepX; //horizontal movement;
 			mainImageTilePosY+=mainImageTileStepY; //goes downward; vertical
 
@@ -663,93 +727,58 @@
 
 			mainImageTilePosX4+=mainImageTileStepX; //horizontal movement;
 			mainImageTilePosY4+=mainImageTileStepY; //goes downward; vertical
+*/
+			for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+				arrayMainImageTilePosX[iCount]+=mainImageTileStepX;
+				arrayMainImageTilePosY[iCount]+=mainImageTileStepY;
+			}
+
 		}
 
 		
 		//TO-DO: -add: function; AI; Artificial Intelligence
 		//combination of forward, diagonal movements
 				
+				
+		const iOffsetY=24; //due to 64x64 tile; 360 stage height; 
+		
 		//STAGE; MAX
-		//if (mainImageTilePosX+iImageFrameWidth>iStageMaxWidth) {
-		if (mainImageTilePosX>iStageMaxWidth) {
-			//mainImageTilePosX=iStageMaxWidth-iImageFrameWidth;
-			mainImageTilePosX=0-iImageFrameWidth;
-		}/*
-		else if (mainImageTilePosX<0) {
-			mainImageTilePosX=0;
-		}*/
-
-		//if (mainImageTilePosY+iImageFrameHeight>iStageMaxHeight) {
-		if (mainImageTilePosY>iStageMaxHeight) {
-			//mainImageTilePosY=iStageMaxHeight-iImageFrameHeight;
-			mainImageTilePosY=0-iImageFrameHeight;
-		}/*
-		else if (mainImageTilePosY<0) {
-			mainImageTilePosY=0;
-		}*/
-
-		//----------------------------
-		//if (mainImageTilePosX2+iImageFrameWidth>iStageMaxWidth) {
-		if (mainImageTilePosX2>iStageMaxWidth) {
-			//mainImageTilePosX2=iStageMaxWidth-iImageFrameWidth;
-			mainImageTilePosX2=0-iImageFrameWidth;
-		}/*
-		else if (mainImageTilePosX2<0) {
-			mainImageTilePosX2=0;
-		}*/
-
-		//if (mainImageTilePosY2+iImageFrameHeight>iStageMaxHeight) {
-		if (mainImageTilePosY2>iStageMaxHeight) {
-			//mainImageTilePosY2=iStageMaxHeight-iImageFrameHeight;
-			mainImageTilePosY2=0-iImageFrameHeight;
-		}/*
-		else if (mainImageTilePosY2<0) {
-			mainImageTilePosY2=0;
-		}*/
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			if (arrayMainImageTilePosX[iCount]>iStageMaxWidth) {
+				arrayMainImageTilePosX[iCount]=0-iImageFrameWidth;
+			}
+			
+			if (arrayMainImageTilePosY[iCount]-iOffsetY>iStageMaxHeight) {
+				arrayMainImageTilePosY[iCount]=0-iImageFrameHeight;
+			}
+		}	
 		
-		//----------------------------
-		//if (mainImageTilePosX3+iImageFrameWidth>iStageMaxWidth) {
-		if (mainImageTilePosX3>iStageMaxWidth) {
-			//mainImageTilePosX3=iStageMaxWidth-iImageFrameWidth;
-			mainImageTilePosX3=0-iImageFrameWidth;
-		}/*
-		else if (mainImageTilePosX3<0) {
-			mainImageTilePosX3=0;
-		}*/
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			arrayMainImageTile[iCount].style.left = arrayMainImageTilePosX[iCount]+"px";	
+			arrayMainImageTile[iCount].style.top = arrayMainImageTilePosY[iCount]+"px";	
 
-		//if (mainImageTilePosY3+iImageFrameHeight>iStageMaxHeight) {
-		if (mainImageTilePosY3>iStageMaxHeight) {
-			//mainImageTilePosY3=iStageMaxHeight-iImageFrameHeight;
-			mainImageTilePosY3=0-iImageFrameHeight;
-		}/*
-		else if (mainImageTilePosY3<0) {
-			mainImageTilePosY3=0;
-		}*/
-
-		//----------------------------
-		//if (mainImageTilePosX4+iImageFrameWidth>iStageMaxWidth) {
-		if (mainImageTilePosX4>iStageMaxWidth) {
-			//mainImageTilePosX4=iStageMaxWidth-iImageFrameWidth;
-			mainImageTilePosX4=0-iImageFrameWidth;
-		}/*
-		else if (mainImageTilePosX4<0) {
-			mainImageTilePosX4=0;
-		}*/
-
-		//if (mainImageTilePosY4+iImageFrameHeight>iStageMaxHeight) {
-		if (mainImageTilePosY4>iStageMaxHeight) {
-			//mainImageTilePosY4=iStageMaxHeight-iImageFrameHeight;
-			mainImageTilePosY4=0-iImageFrameHeight;
-		}/*
-		else if (mainImageTilePosY4<0) {
-			mainImageTilePosY4=0;
-		}*/
+			//arrayMainImageTile[iCount].style.left=(iHorizontalOffset)+arrayMainImageTilePosX[iCount]+"px";	
+			//arrayMainImageTile[iCount].style.top = (iVerticalOffsetInnerScreen)+arrayMainImageTilePosY[iCount]+"px";	
+		}
+	
+		//arrayMainImageTile[0].style.left = arrayMainImageTilePosX[0]+"px";	
+		//arrayMainImageTile[0].style.top = arrayMainImageTilePosY[0]+"px";	
+		//arrayMainImageTile[1].style.left = arrayMainImageTilePosX[1]+"px";	
+		//arrayMainImageTile[1].style.top = arrayMainImageTilePosY[1]+"px";	
 		
-		//added by Mike, 20250929; from 20230321
+		
+		
+		
+		//added by Mike, 20250930; from 20250929
+/*
 		mainImageTile.style.visibility = "visible";
 		mainImageTile2.style.visibility = "visible";
 		mainImageTile3.style.visibility = "visible";
 		mainImageTile4.style.visibility = "visible";
+*/
+		for (iCount=0; iCount<iTotalImageTileCount; iCount++) {
+			arrayMainImageTile[iCount].style.visibility = "visible";
+		}
 
 		setPanelTable.style.left = (iHorizontalOffset+iStageMaxWidth)+"px";	
 		setPanelTable.style.top = (iVerticalOffsetInnerScreen)+"px"; //+iStageMaxHeight
@@ -772,11 +801,33 @@
   
 	<canvas id="myCanvasId" class="myCanvas">
 	</canvas>
-
-	<img id="mainImageTileImageId" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId0" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId1" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
 	<img id="mainImageTileImageId2" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
 	<img id="mainImageTileImageId3" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
 	<img id="mainImageTileImageId4" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId5" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	
+	<img id="mainImageTileImageId6" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId7" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId8" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId9" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId10" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId11" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+
+	<img id="mainImageTileImageId12" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId13" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId14" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId15" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId16" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId17" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+
+	<img id="mainImageTileImageId18" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId19" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId20" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId21" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId22" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
+	<img id="mainImageTileImageId23" class="ImageTileFrame1" src="assets/images/inputImageNew.png">	
 
   </body>
 </html>
